@@ -1,0 +1,31 @@
+{% if page.handle == 'contact' or page.handle == 'contact-us' %}
+<section class="g-section" style="padding-top:170px;padding-bottom:120px;position:relative;overflow:hidden;">
+  {% render 'gold-waves' %}
+  <div style="max-width:640px;margin:0 auto;position:relative;text-align:center;">
+    <p class="g-eyebrow">The House</p>
+    <h1 class="g-h2">Write to Us</h1>
+    <p style="font-family:'Playfair Display',Georgia,serif;font-style:italic;color:var(--ivory);font-size:17px;margin:14px 0 0;">Every letter is read by the family, not a ticket system.</p>
+
+    <div style="margin-top:56px;display:flex;justify-content:center;">
+      <div style="border:1px solid rgba(139,111,62,0.4);background:var(--green-3);padding:36px 24px;max-width:340px;width:100%;">
+        <p style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--bronze);margin:0;">Email</p>
+        <a href="mailto:Support@gorony.com" style="display:block;margin-top:12px;font-family:'Playfair Display',Georgia,serif;font-size:17px;color:var(--gold);text-decoration:none;cursor:pointer;">Support@gorony.com</a>
+        <p style="font-size:12px;color:rgba(245,240,230,0.55);margin:10px 0 0;">Replies within 1&ndash;2 business days</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% else %}
+<section class="g-section" style="padding-top:140px;">
+  {% render 'gold-waves' %}
+  <div class="g-narrow" style="position:relative;">
+    <p class="g-eyebrow">{{ page.metafields.custom.eyebrow.value | default: 'Gorony' }}</p>
+    <h1 class="g-h2" style="margin-bottom:40px;">{{ page.title }}</h1>
+    <div class="g-rte">{{ page.content }}</div>
+  </div>
+</section>
+
+{% endif %}
+{% schema %}
+{ "name": "Page", "settings": [] }
+{% endschema %}

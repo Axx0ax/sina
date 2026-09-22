@@ -1,0 +1,22 @@
+{%- comment -%}Keep /pages/faq correct even if Shopify still assigns the old collection template.{%- endcomment -%}
+{%- if page.handle == 'faq' -%}
+  {% render 'g-faq-page' %}
+{%- else -%}
+  {%- assign source_collection = collections.all -%}
+  {%- if section.settings.collection_source != blank -%}{%- assign source_collection = section.settings.collection_source -%}{%- endif -%}
+  {% render 'g-luxury-collection', source_collection: source_collection, products_per_page: section.settings.products_per_page, eyebrow: section.settings.eyebrow, heading: section.settings.heading, intro: section.settings.intro, featured_product: section.settings.featured_product %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection (Gorony)",
+  "settings": [
+    { "type": "collection", "id": "collection_source", "label": "Collection to show", "info": "Leave empty to show every published product." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Founding Collection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Collection" },
+    { "type": "textarea", "id": "intro", "label": "Intro text", "default": "Facial skincare and makeup, each piece earning its place before anything new is added." },
+    { "type": "product", "id": "featured_product", "label": "Featured product", "info": "Optional. Leave empty to feature the first product automatically." },
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 6, "max": 50, "step": 2, "default": 50 }
+  ]
+}
+{% endschema %}

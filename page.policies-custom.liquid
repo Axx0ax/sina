@@ -1,0 +1,109 @@
+<div class="g-policies relative bg-[#0D1F18] px-6 pb-20 pt-40 md:pt-44">
+  <style>
+    .g-policies {
+      border-top: none;
+    }
+    .g-policies::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 162, 75, 0.55) 50%, transparent);
+    }
+    .g-policy-nav a {
+      position: relative;
+      display: inline-block;
+      padding-bottom: 3px;
+    }
+    .g-policy-nav a::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 0%;
+      height: 1px;
+      background: #C9A24B;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    .g-policy-nav a:hover::after,
+    .g-policy-nav a.active::after {
+      width: 100%;
+      left: 0%;
+    }
+    .g-policy-section {
+      scroll-margin-top: 140px;
+    }
+    .g-policy-body p {
+      color: rgba(245, 240, 230, 0.65);
+      line-height: 1.8;
+      margin-bottom: 1.1em;
+    }
+    .g-policy-body p:last-child {
+      margin-bottom: 0;
+    }
+    .g-policy-body strong {
+      color: #F5F0E6;
+    }
+  </style>
+
+  <div class="mx-auto max-w-3xl text-center">
+    <p class="font-gorony-body text-[10px] tracking-[0.3em] text-[#8B6F3E] uppercase">The House</p>
+    <h1 class="font-gorony-display mt-3 text-2xl tracking-[0.15em] text-[#C9A24B] md:text-3xl">Policies</h1>
+    <p class="font-gorony-body mt-4 text-xs leading-relaxed text-[#F5F0E6]/55">Shipping, returns, privacy, and terms &mdash; everything you need to know about ordering from Gorony.</p>
+  </div>
+
+  <nav class="g-policy-nav mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-8 border-y border-[#C9A24B]/15 py-5" aria-label="Policy sections">
+    <a href="#shipping" class="font-gorony-body text-xs tracking-widest text-[#F5F0E6]/60 uppercase transition-colors hover:text-[#C9A24B]">Shipping</a>
+    <a href="#returns" class="font-gorony-body text-xs tracking-widest text-[#F5F0E6]/60 uppercase transition-colors hover:text-[#C9A24B]">Returns &amp; Refunds</a>
+    <a href="#privacy" class="font-gorony-body text-xs tracking-widest text-[#F5F0E6]/60 uppercase transition-colors hover:text-[#C9A24B]">Privacy</a>
+    <a href="#terms" class="font-gorony-body text-xs tracking-widest text-[#F5F0E6]/60 uppercase transition-colors hover:text-[#C9A24B]">Terms</a>
+  </nav>
+
+  <div class="mx-auto mt-16 max-w-3xl space-y-20">
+
+    <section id="shipping" class="g-policy-section">
+      <p class="font-gorony-body text-[10px] tracking-[0.3em] text-[#8B6F3E] uppercase">01</p>
+      <h2 class="font-gorony-display mt-2 text-lg tracking-[0.1em] text-[#F5F0E6] md:text-xl">Shipping</h2>
+      <div class="g-policy-body font-gorony-body mt-5 text-sm">
+        <p>Every Gorony order is prepared with care and dispatched within <strong>1&ndash;3 business days</strong> of purchase.</p>
+        <p>Delivery times vary by destination and are typically <strong>3&ndash;10 business days</strong> domestically and <strong>7&ndash;14 business days</strong> internationally. You'll receive tracking details by email as soon as your order ships.</p>
+        <p>Shipping costs are calculated at checkout based on your location and order value. International orders may be subject to import duties and taxes, which are the customer's responsibility.</p>
+        <p>Read the full <a href="/policies/shipping-policy" style="color:#C9A24B;text-decoration:underline;text-underline-offset:3px">shipping policy</a>.</p>
+      </div>
+    </section>
+    <section id="returns" class="g-policy-section">
+      <p class="font-gorony-body text-[10px] tracking-[0.3em] text-[#8B6F3E] uppercase">02</p>
+      <h2 class="font-gorony-display mt-2 text-lg tracking-[0.1em] text-[#F5F0E6] md:text-xl">Returns &amp; Refunds</h2>
+      <div class="g-policy-body font-gorony-body mt-5 text-sm">
+        <p>We want you to love your Gorony pieces. If something isn't right, unopened and unused items may be returned within <strong>30 days</strong> of delivery for a full refund.</p>
+        <p>To start a return, email support@gorony.com with your order number and reason for return, and we'll send you return instructions. Once received and inspected, refunds are issued to your original payment method within <strong>5&ndash;10 business days</strong>. Return shipping is paid by the customer unless the item arrived damaged, faulty or incorrect, and original shipping charges are not refunded.</p>
+        <p>Due to hygiene reasons, opened skincare and makeup items cannot be returned unless faulty. If your order arrives damaged, faulty or incorrect, email us within <strong>7 days</strong> of delivery with a photo and we'll send a replacement or a full refund.</p>
+        <p>Read the full <a href="/policies/refund-policy" style="color:#C9A24B;text-decoration:underline;text-underline-offset:3px">refund policy</a>.</p>
+      </div>
+    </section>
+    <section id="privacy" class="g-policy-section">
+      <p class="font-gorony-body text-[10px] tracking-[0.3em] text-[#8B6F3E] uppercase">03</p>
+      <h2 class="font-gorony-display mt-2 text-lg tracking-[0.1em] text-[#F5F0E6] md:text-xl">Privacy</h2>
+      <div class="g-policy-body font-gorony-body mt-5 text-sm">
+        <p>Your trust matters to us. We collect the information needed to process your order, provide customer support, and improve your experience &mdash; including name, contact details, shipping address, and payment information.</p>
+        <p>Information is shared with the partners who run our store, such as Shopify, payment processors and shipping carriers, and with advertising partners to measure and show our ads. Depending on where you live, you can opt out of that advertising use on our <a href="/pages/data-sharing-opt-out" style="color:#C9A24B;text-decoration:underline;text-underline-offset:3px">Your Privacy Choices</a> page.</p>
+        <p>You may request access to, correction of, or deletion of your personal data at any time by emailing support@gorony.com.</p>
+        <p>Read the full <a href="/policies/privacy-policy" style="color:#C9A24B;text-decoration:underline;text-underline-offset:3px">privacy policy</a>.</p>
+      </div>
+    </section>
+    <section id="terms" class="g-policy-section">
+      <p class="font-gorony-body text-[10px] tracking-[0.3em] text-[#8B6F3E] uppercase">04</p>
+      <h2 class="font-gorony-display mt-2 text-lg tracking-[0.1em] text-[#F5F0E6] md:text-xl">Terms</h2>
+      <div class="g-policy-body font-gorony-body mt-5 text-sm">
+        <p>By placing an order with Gorony, you agree to these terms. All product descriptions, pricing, and availability are subject to change without notice.</p>
+        <p>Only one discount code can be used per order. Our products are cosmetics for external use only &mdash; patch test new products and stop using a product if irritation occurs.</p>
+        <p>All content on this site &mdash; including the Gorony name, crest, and designs &mdash; is the property of Gorony and may not be reproduced without permission.</p>
+        <p>We reserve the right to refuse or cancel any order at our discretion, including in cases of suspected fraud or error in pricing. If we cancel an order you have already paid for, we will refund you in full.</p>
+        <p>Read the full <a href="/policies/terms-of-service" style="color:#C9A24B;text-decoration:underline;text-underline-offset:3px">terms of service</a>.</p>
+      </div>
+    </section>
+
+  </div>
+</div>

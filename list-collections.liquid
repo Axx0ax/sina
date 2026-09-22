@@ -1,0 +1,13 @@
+<section class="g-section" style="padding-top:140px;">
+  <div class="g-wrap">
+    <h1 class="g-h2">Collections</h1>
+    <div class="g-grid">
+      {%- for collection in collections -%}
+        <a href="{{ collection.url }}" class="g-card">
+          {%- if collection.featured_image -%}<img class="g-card__img" src="{{ collection.featured_image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" width="600" height="800">{%- endif -%}
+          <h3 class="g-card__name" style="padding:0 24px;">{{ collection.title }}</h3>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>

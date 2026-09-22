@@ -1,0 +1,436 @@
+<div class="gx-cart">
+
+<section class="g-cart-hero">
+  <div class="g-wrap">
+    <div class="g-cart-hero__inner">
+      <img src="{{ 'gorony-mark-v2.png' | asset_url }}" alt="" width="40" height="40" class="g-cart-hero__mark" aria-hidden="true">
+      <div>
+        <p class="g-cart-eyebrow">A Private Selection</p>
+        <div class="g-cart-heading-row">
+          <h1>Your Shopping Bag</h1>
+          <p data-cart-count-text>{{ cart.item_count }} {% if cart.item_count == 1 %}piece{% else %}pieces{% endif %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="g-cart-page">
+  <div class="g-wrap">
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" id="gCartForm" class="g-cart-layout" aria-busy="false">
+        <div class="g-cart-lines">
+          <div class="g-cart-lines__head">
+            <span>Your Edit</span>
+            <span class="g-cart-live"><i aria-hidden="true"></i> Live totals</span>
+          </div>
+
+          {%- for item in cart.items -%}
+            <article class="g-cart-item" data-line-item data-line-number="{{ forloop.index }}">
+              <span class="g-cart-item__number" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              <a href="{{ item.url }}" class="g-cart-item__image">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 360 }}" alt="{{ item.image.alt | default: item.product.title | escape }}" width="180" height="240" loading="lazy">
+                {%- else -%}
+                  <span>GORONY</span>
+                {%- endif -%}
+              </a>
+
+              <div class="g-cart-item__details">
+                <p class="g-cart-item__type">{%- if item.product.type != blank -%}{{ item.product.type }}{%- else -%}Gorony Beauty{%- endif -%}</p>
+                <h2><a href="{{ item.url }}">{{ item.product.title }}</a></h2>
+                {%- unless item.variant.title == 'Default Title' -%}<p class="g-cart-item__variant"><span>Selection</span>{{ item.variant.title }}</p>{%- endunless -%}
+
+                {%- unless item.properties == empty -%}
+                  <dl class="g-cart-item__properties">
+                    {%- for property in item.properties -%}
+                      {%- assign first_character = property.first | slice: 0 -%}
+                      {%- unless property.last == blank or first_character == '_' -%}
+                        <div><dt>{{ property.first }}:</dt><dd>{{ property.last }}</dd></div>
+                      {%- endunless -%}
+                    {%- endfor -%}
+                  </dl>
+                {%- endunless -%}
+
+                <div class="g-cart-item__actions">
+                  <div class="g-quantity" data-quantity-control data-line-number="{{ forloop.index }}" data-server-quantity="{{ item.quantity }}">
+                    <button type="button" data-quantity-minus aria-label="Decrease quantity of {{ item.product.title | escape }}">&minus;</button>
+                    <label class="sr-only" for="CartQuantity-{{ forloop.index }}">Quantity for {{ item.product.title }}</label>
+                    <input id="CartQuantity-{{ forloop.index }}" name="updates[{{ item.key }}]" type="number" min="1" value="{{ item.quantity }}" inputmode="numeric" data-quantity-input>
+                    <button type="button" data-quantity-plus aria-label="Increase quantity of {{ item.product.title | escape }}">+</button>
+                  </div>
+                  <a href="{{ item.url_to_remove }}" class="g-cart-remove" data-cart-remove data-line-number="{{ forloop.index }}" aria-label="Remove {{ item.product.title | escape }} from your shopping bag">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="m19 6-1 14H6L5 6"></path><path d="M10 11v5M14 11v5"></path></svg>
+                    <span data-cart-remove-label>Remove item</span>
+                  </a>
+                </div>
+                <p class="g-cart-item__error" data-quantity-error role="alert" hidden></p>
+              </div>
+
+              <div class="g-cart-item__price">
+                <s data-line-original{% if item.original_line_price == item.final_line_price %} hidden{% endif %}>{{ item.original_line_price | money }}</s>
+                <span data-line-price>{{ item.final_line_price | money }}</span>
+                <small data-line-discount{% if item.line_level_discount_allocations == empty %} hidden{% endif %}>{%- for discount in item.line_level_discount_allocations -%}{{ discount.discount_application.title }}{%- unless forloop.last %}, {% endunless -%}{%- endfor -%}</small>
+              </div>
+            </article>
+          {%- endfor -%}
+
+          <div class="g-cart-update-row">
+            <a href="{{ routes.all_products_collection_url }}" class="g-cart-continue">Continue Shopping</a>
+            <span class="g-cart-auto-label"><i aria-hidden="true"></i> Quantities save automatically</span>
+            <noscript><button type="submit" name="update" class="g-cart-update">Update Bag</button></noscript>
+          </div>
+
+          <details class="g-cart-note">
+            <summary><span>A note for the house</span><i aria-hidden="true"></i></summary>
+            <label for="CartNote" class="sr-only">Gift note or order instruction</label>
+            <textarea id="CartNote" name="note" rows="3" placeholder="Write a gift note or order instruction">{{ cart.note }}</textarea>
+          </details>
+        </div>
+
+        <aside class="g-cart-summary">
+          <div class="g-cart-summary__heading">
+            <div>
+              <p class="g-cart-summary__eyebrow">Order Ledger</p>
+              <h2>Your Selection</h2>
+            </div>
+            <img src="{{ 'gorony-mark-v2.png' | asset_url }}" alt="" width="40" height="40" aria-hidden="true">
+          </div>
+
+          <div class="g-cart-summary__row">
+            <span>Subtotal</span>
+            <strong data-cart-subtotal>{{ cart.items_subtotal_price | money }}</strong>
+          </div>
+          <div class="g-cart-summary__row g-cart-summary__discount" data-cart-discount-row{% if cart.total_discount == 0 %} hidden{% endif %}>
+            <span>Discounts</span>
+            <strong data-cart-discount>-{{ cart.total_discount | money }}</strong>
+          </div>
+          <div class="g-cart-summary__total">
+            <span>Estimated Total</span>
+            <strong data-cart-total>{{ cart.total_price | money_with_currency }}</strong>
+          </div>
+
+          <div class="g-cart-discount">
+            <label for="CartDiscount">Discount code</label>
+            <div class="g-cart-discount__field">
+              <input id="CartDiscount" name="discount" type="text" autocomplete="off" spellcheck="false" placeholder="Enter your code" data-discount-input>
+              <button type="button" data-discount-apply>Apply</button>
+            </div>
+            <p data-discount-message>Codes are verified at secure checkout.</p>
+          </div>
+
+          <p class="g-cart-summary__notice">Taxes and available shipping are calculated at checkout.</p>
+          <button type="submit" name="checkout" class="g-cart-checkout" data-cart-checkout>Proceed to Checkout</button>
+          <ul class="g-cart-assurances" aria-label="Checkout details">
+            <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="10" width="14" height="10" rx="1"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg><span>Secure Shopify checkout</span></li>
+            <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M5 10h14v9H5z"></path></svg><span>Order confirmation by email</span></li>
+          </ul>
+        </aside>
+        <p id="gCartStatus" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+      </form>
+    {%- else -%}
+      <div class="g-cart-empty">
+        <div class="g-cart-empty__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l1 13H5L6 8Z"></path><path d="M9 9V6a3 3 0 0 1 6 0v3"></path></svg>
+        </div>
+        <p class="g-cart-eyebrow">A LITTLE SPACE FOR SOMETHING BEAUTIFUL</p>
+        <h2>Your next ritual starts here.</h2>
+        <p>Explore the house and choose the products that belong in your ritual.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="g-btn-solid">Explore the Collection</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var form = document.getElementById('gCartForm');
+    if (!form) return;
+
+    var status = document.getElementById('gCartStatus');
+    var checkout = form.querySelector('[data-cart-checkout]');
+    var discountInput = form.querySelector('[data-discount-input]');
+    var discountApply = form.querySelector('[data-discount-apply]');
+    var discountMessage = form.querySelector('[data-discount-message]');
+    var controls = Array.prototype.slice.call(form.querySelectorAll('[data-quantity-control]'));
+    var removeLinks = Array.prototype.slice.call(form.querySelectorAll('[data-cart-remove]'));
+    var requestQueue = Promise.resolve();
+    var pendingControls = 0;
+    var currencyCode = {{ cart.currency.iso_code | default: localization.country.currency.iso_code | default: 'USD' | json }};
+
+    function money(cents, withCurrency) {
+      if (window.Shopify && typeof window.Shopify.formatMoney === 'function') {
+        return window.Shopify.formatMoney(cents, withCurrency ? {{ shop.money_with_currency_format | json }} : {{ shop.money_format | json }});
+      }
+      var amount = (cents / 100).toFixed(2);
+      try {
+        var formatted = new Intl.NumberFormat(document.documentElement.lang || 'en', {
+          style: 'currency',
+          currency: currencyCode,
+          currencyDisplay: 'symbol'
+        }).format(cents / 100);
+        return withCurrency ? formatted + ' ' + currencyCode : formatted;
+      } catch (error) {
+        return withCurrency ? '$' + amount + ' ' + currencyCode : '$' + amount;
+      }
+    }
+
+    function setBusy(control, busy) {
+      var lineItem = control.closest('[data-line-item]');
+      if (busy) {
+        pendingControls += 1;
+        control.classList.add('g-quantity--updating');
+        if (lineItem) lineItem.classList.add('g-cart-item--updating');
+      } else {
+        pendingControls = Math.max(0, pendingControls - 1);
+        control.classList.remove('g-quantity--updating');
+        if (lineItem) lineItem.classList.remove('g-cart-item--updating');
+      }
+      form.setAttribute('aria-busy', pendingControls > 0 ? 'true' : 'false');
+      if (checkout) checkout.disabled = pendingControls > 0;
+    }
+
+    function setError(control, message) {
+      var lineItem = control.closest('[data-line-item]');
+      var error = lineItem && lineItem.querySelector('[data-quantity-error]');
+      if (!error) return;
+      error.textContent = message || '';
+      error.hidden = !message;
+    }
+
+    function updateControlButtons(control) {
+      var input = control.querySelector('[data-quantity-input]');
+      var minus = control.querySelector('[data-quantity-minus]');
+      if (input && minus) minus.disabled = parseInt(input.value, 10) <= 1;
+    }
+
+    function updateHeaderCount(itemCount) {
+      document.querySelectorAll('[data-cart-count]').forEach(function (element) {
+        element.textContent = itemCount;
+      });
+      document.querySelectorAll('[data-cart-link]').forEach(function (link) {
+        link.setAttribute('aria-label', 'Shopping bag, ' + itemCount + (itemCount === 1 ? ' item' : ' items'));
+      });
+      var countText = document.querySelector('[data-cart-count-text]');
+      if (countText) countText.textContent = itemCount + (itemCount === 1 ? ' piece' : ' pieces');
+    }
+
+    function applyCart(cart, activeControl) {
+      updateHeaderCount(cart.item_count);
+
+      var subtotal = document.querySelector('[data-cart-subtotal]');
+      var total = document.querySelector('[data-cart-total]');
+      var discount = document.querySelector('[data-cart-discount]');
+      var discountRow = document.querySelector('[data-cart-discount-row]');
+      if (subtotal) subtotal.textContent = money(cart.items_subtotal_price, false);
+      if (total) total.textContent = money(cart.total_price, true);
+      if (discount) discount.textContent = '-' + money(cart.total_discount, false);
+      if (discountRow) discountRow.hidden = cart.total_discount <= 0;
+
+      controls.forEach(function (control) {
+        var lineNumber = parseInt(control.getAttribute('data-line-number'), 10);
+        var item = cart.items[lineNumber - 1];
+        if (!item) return;
+
+        control.setAttribute('data-server-quantity', item.quantity);
+        var input = control.querySelector('[data-quantity-input]');
+        var desired = parseInt(input.value, 10);
+        if (control !== activeControl || desired === control._sentQuantity) input.value = item.quantity;
+        input.setAttribute('name', 'updates[' + item.key + ']');
+        updateControlButtons(control);
+
+        var lineItem = control.closest('[data-line-item]');
+        if (!lineItem) return;
+        var linePrice = lineItem.querySelector('[data-line-price]');
+        var originalPrice = lineItem.querySelector('[data-line-original]');
+        var lineDiscount = lineItem.querySelector('[data-line-discount]');
+        if (linePrice) linePrice.textContent = money(item.final_line_price, false);
+        if (originalPrice) {
+          originalPrice.textContent = money(item.original_line_price, false);
+          originalPrice.hidden = item.original_line_price === item.final_line_price;
+        }
+        if (lineDiscount) {
+          var titles = (item.line_level_discount_allocations || []).map(function (allocation) {
+            return allocation.discount_application.title;
+          });
+          lineDiscount.textContent = titles.join(', ');
+          lineDiscount.hidden = titles.length === 0;
+        }
+      });
+    }
+
+    function responseError(response) {
+      return response.json().catch(function () { return {}; }).then(function (body) {
+        throw new Error(body.description || body.message || 'The bag could not be updated.');
+      });
+    }
+
+    function syncControl(control) {
+      if (control._queued) return;
+      control._queued = true;
+      setBusy(control, true);
+      setError(control, '');
+
+      requestQueue = requestQueue.then(function runLatestQuantity() {
+        var input = control.querySelector('[data-quantity-input]');
+        var desired = Math.max(1, parseInt(input.value, 10) || 1);
+        var serverQuantity = parseInt(control.getAttribute('data-server-quantity'), 10);
+        if (desired === serverQuantity) return;
+
+        control._sentQuantity = desired;
+        return fetch((window.Shopify && window.Shopify.routes ? window.Shopify.routes.root : '/') + 'cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ line: parseInt(control.getAttribute('data-line-number'), 10), quantity: desired })
+        }).then(function (response) {
+          if (!response.ok) return responseError(response);
+          return response.json();
+        }).then(function (cart) {
+          applyCart(cart, control);
+          if (status) status.textContent = 'Shopping bag updated. ' + cart.item_count + (cart.item_count === 1 ? ' item.' : ' items.');
+          if (parseInt(input.value, 10) !== parseInt(control.getAttribute('data-server-quantity'), 10)) {
+            return runLatestQuantity();
+          }
+        });
+      }).catch(function (error) {
+        var input = control.querySelector('[data-quantity-input]');
+        input.value = control.getAttribute('data-server-quantity');
+        updateControlButtons(control);
+        setError(control, error.message);
+        if (status) status.textContent = error.message;
+      }).finally(function () {
+        control._queued = false;
+        setBusy(control, false);
+      });
+    }
+
+    controls.forEach(function (control) {
+      var input = control.querySelector('[data-quantity-input]');
+      var minus = control.querySelector('[data-quantity-minus]');
+      var plus = control.querySelector('[data-quantity-plus]');
+      if (!input || !minus || !plus) return;
+
+      minus.addEventListener('click', function () {
+        input.value = Math.max(1, parseInt(input.value, 10) - 1);
+        updateControlButtons(control);
+        syncControl(control);
+      });
+      plus.addEventListener('click', function () {
+        input.value = Math.max(1, parseInt(input.value, 10) + 1);
+        updateControlButtons(control);
+        syncControl(control);
+      });
+      input.addEventListener('change', function () {
+        input.value = Math.max(1, parseInt(input.value, 10) || 1);
+        updateControlButtons(control);
+        syncControl(control);
+      });
+      updateControlButtons(control);
+    });
+
+    removeLinks.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (link.getAttribute('aria-disabled') === 'true') return;
+
+        var lineItem = link.closest('[data-line-item]');
+        var error = lineItem && lineItem.querySelector('[data-quantity-error]');
+        var label = link.querySelector('[data-cart-remove-label]');
+        link.setAttribute('aria-disabled', 'true');
+        link.classList.add('g-cart-remove--busy');
+        if (label) label.textContent = 'Removing';
+        if (lineItem) lineItem.classList.add('g-cart-item--updating');
+        if (error) error.hidden = true;
+        form.setAttribute('aria-busy', 'true');
+        if (checkout) checkout.disabled = true;
+
+        requestQueue = requestQueue.then(function () {
+          var root = window.Shopify && window.Shopify.routes ? window.Shopify.routes.root : '/';
+          return fetch(root + 'cart/change.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ line: parseInt(link.getAttribute('data-line-number'), 10), quantity: 0 })
+          }).then(function (response) {
+            if (!response.ok) return responseError(response);
+            return response.json();
+          }).then(function (cart) {
+            updateHeaderCount(cart.item_count);
+            if (status) status.textContent = 'Item removed. Shopping bag updated.';
+            window.location.reload();
+          });
+        }).catch(function (removeError) {
+          link.removeAttribute('aria-disabled');
+          link.classList.remove('g-cart-remove--busy');
+          if (label) label.textContent = 'Remove item';
+          if (lineItem) lineItem.classList.remove('g-cart-item--updating');
+          if (error) {
+            error.textContent = removeError.message;
+            error.hidden = false;
+          }
+          form.setAttribute('aria-busy', pendingControls > 0 ? 'true' : 'false');
+          if (checkout) checkout.disabled = pendingControls > 0;
+          if (status) status.textContent = removeError.message;
+        });
+      });
+    });
+
+    function saveDiscountCode() {
+      if (!discountInput) return '';
+      var code = discountInput.value.trim();
+      if (!code) {
+        if (discountMessage) discountMessage.textContent = 'Enter a code to carry it to checkout.';
+        discountInput.focus();
+        return '';
+      }
+      try { window.sessionStorage.setItem('goronyDiscountCode', code); } catch (error) {}
+      if (discountMessage) discountMessage.textContent = code + ' is ready. Shopify will verify it at checkout.';
+      return code;
+    }
+
+    if (discountInput) {
+      try {
+        var savedCode = window.sessionStorage.getItem('goronyDiscountCode');
+        if (savedCode) discountInput.value = savedCode;
+      } catch (error) {}
+      discountInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          saveDiscountCode();
+        }
+      });
+    }
+    if (discountApply) discountApply.addEventListener('click', saveDiscountCode);
+    if (checkout) checkout.addEventListener('click', function (event) {
+      var code = discountInput ? discountInput.value.trim() : '';
+      if (!code) return;
+      event.preventDefault();
+      saveDiscountCode();
+      var root = window.Shopify && window.Shopify.routes ? window.Shopify.routes.root : '/';
+      window.location.assign(root + 'discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(root + 'checkout'));
+    });
+  })();
+</script>
+
+{% comment %}Gorony cart visual upgrade. Existing cart controls are retained.{% endcomment %}
+<section class="gx-discover" aria-labelledby="gx-discover-title">
+<div class="gx-discover-head"><div><p class="gx-kicker">A LITTLE INSPIRATION</p><h2 id="gx-discover-title">Make it <em>your ritual.</em></h2></div><a href="{{ routes.all_products_collection_url }}">Explore the collection ↗</a></div>
+<div class="gx-products">
+{% for product in collections.all.products limit: 3 %}
+<a class="gx-product" href="{{ product.url }}"><div>{% if product.featured_image %}{{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '240, 400, 700', sizes: '(max-width: 700px) 43vw, 28vw', alt: product.title }}{% endif %}<span aria-hidden="true">↗</span></div><p>{{ product.title | escape }}</p><small>{% if product.price_varies %}From {% endif %}{{ product.price | money }}</small></a>
+{% endfor %}
+</div></section>
+{% stylesheet %}
+.gx-cart{background:#f2eee5;color:#17382b;padding-top:108px;font-family:Arial,sans-serif;overflow:clip}.gx-cart *{box-sizing:border-box}.gx-cart [hidden]{display:none!important}.gx-cart .g-wrap{width:88%;max-width:1280px;margin:auto}.gx-cart .g-cart-hero{background:transparent!important;border:0!important;padding:60px 0 35px!important;min-height:0!important}.gx-cart .g-cart-hero:before,.gx-cart .g-cart-hero:after{display:none!important}.gx-cart .g-cart-hero__inner{display:block!important}.gx-cart .g-cart-hero__mark{display:none}.gx-cart .g-cart-eyebrow,.gx-kicker{font:9px/1.8 Arial,sans-serif!important;letter-spacing:.2em!important;color:#8b7449!important;text-transform:uppercase}.gx-cart .g-cart-heading-row{display:flex;align-items:baseline;justify-content:space-between;gap:15px}.gx-cart .g-cart-heading-row h1{font:400 clamp(38px,5.5vw,78px)/1.1 Georgia,serif!important;letter-spacing:-.045em;color:#17382b!important;margin:15px 0!important}.gx-cart [data-cart-count-text]{font:10px Arial,sans-serif!important;letter-spacing:.13em;color:#6c7766!important;white-space:nowrap}.gx-cart .g-cart-page{background:transparent!important;padding:15px 0 60px!important}.gx-cart .g-cart-empty{position:relative;isolation:isolate;overflow:hidden;background:#e6e8dc!important;border:1px solid #c6ccb955!important;border-radius:30px!important;min-height:490px;padding:85px 7% 70px!important;text-align:center!important}.gx-cart .g-cart-empty:before,.gx-cart .g-cart-empty:after{content:'';position:absolute;z-index:-1;border:1px solid #a59a7040;border-radius:50%;width:460px;height:460px;top:45%;left:-330px;transform:rotate(-25deg) scaleX(.7);transition:transform 1.4s}.gx-cart .g-cart-empty:after{left:auto;right:-270px;top:-170px;width:540px;height:540px}.gx-cart .g-cart-empty:hover:after{transform:rotate(25deg) scaleX(.8)}.gx-cart .g-cart-empty__icon{width:72px;height:72px;margin:0 auto 28px!important;display:grid;place-items:center;border:1px solid #b1a48166;border-radius:50%;background:#f5f2e899;color:#967b43;animation:gx-arrive 1s both}.gx-cart .g-cart-empty__icon svg{width:33px;height:33px}.gx-cart .g-cart-empty h2{font:400 clamp(34px,4vw,59px)/1.1 Georgia,serif!important;letter-spacing:-.04em;color:#17382b!important;max-width:650px;margin:20px auto!important}.gx-cart .g-cart-empty>p:not(.g-cart-eyebrow){font:13px/1.9 Arial,sans-serif!important;color:#65735f!important;max-width:380px;margin:0 auto 30px!important}.gx-cart .g-btn-solid,.gx-cart .g-cart-checkout{border-radius:100px!important;background:#17382b!important;color:#f5f1e7!important;border:1px solid #17382b!important;padding:19px 29px!important;display:inline-flex;align-items:center;justify-content:center;font:10px/1.4 Arial,sans-serif!important;letter-spacing:.13em;transition:background .3s,transform .3s,box-shadow .3s!important;text-decoration:none}.gx-cart .g-btn-solid:hover,.gx-cart .g-cart-checkout:hover{background:#2e503c!important;transform:translateY(-3px);box-shadow:0 10px 22px #10281918}.gx-cart .g-cart-layout{display:grid!important;grid-template-columns:minmax(0,1fr) 360px;gap:55px;align-items:start}.gx-cart .g-cart-lines__head{border-color:#17382b26!important;color:#727a68!important;font-size:10px;padding:18px 0}.gx-cart .g-cart-live,.gx-cart .g-cart-auto-label{color:#6b7660!important}.gx-cart .g-cart-item{display:grid!important;grid-template-columns:120px minmax(0,1fr) auto;gap:23px;padding:28px 0!important;border-color:#17382b22!important;align-items:start;transition:opacity .4s}.gx-cart .g-cart-item__number{display:none}.gx-cart .g-cart-item__image{width:120px!important;height:150px!important;border-radius:18px!important;overflow:hidden;background:#e8e5dc!important;border:none!important}.gx-cart .g-cart-item__image img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}.gx-cart .g-cart-item__image:hover img{transform:scale(1.06)}.gx-cart .g-cart-item__details{min-width:0}.gx-cart .g-cart-item h2{font:400 25px/1.2 Georgia,serif!important;color:#17382b!important;margin:8px 0!important}.gx-cart .g-cart-item h2 a{color:inherit}.gx-cart .g-cart-item__type{font-size:8px!important;color:#897548!important}.gx-cart .g-cart-item__variant,.gx-cart .g-cart-item__properties{color:#6b7660!important;font-size:11px!important}.gx-cart .g-cart-item__price{color:#17382b!important;font:14px Arial,sans-serif!important}.gx-cart .g-cart-item__actions{display:flex;flex-wrap:wrap;gap:15px;margin-top:20px}.gx-cart .g-quantity{border:1px solid #17382b33!important;border-radius:30px;overflow:hidden;background:transparent}.gx-cart .g-quantity input,.gx-cart .g-quantity button{background:transparent!important;color:#17382b!important;border:0!important;font-size:12px!important}.gx-cart .g-quantity button{min-width:35px;min-height:38px}.gx-cart .g-cart-remove{font:10px Arial,sans-serif!important;color:#65735f!important}.gx-cart .g-cart-remove svg{width:13px}.gx-cart .g-cart-summary{position:sticky;top:135px;background:#17382b!important;border:0!important;border-radius:25px!important;color:#f2eee5!important;padding:30px!important}.gx-cart .g-cart-summary h2{font:400 31px Georgia,serif!important;color:#f2eee5!important}.gx-cart .g-cart-summary__eyebrow{color:#c7b07a!important;font-size:8px!important}.gx-cart .g-cart-summary__heading img{width:38px;height:38px;object-fit:contain}.gx-cart .g-cart-summary__row,.gx-cart .g-cart-summary__total{border-color:#ffffff22!important;color:#e4e4d7!important}.gx-cart .g-cart-summary__total strong{color:#e8d29c!important;font:26px Georgia,serif!important}.gx-cart .g-cart-summary__notice,.gx-cart .g-cart-assurances{color:#c9d0bf!important;font-size:10px!important;line-height:1.8}.gx-cart .g-cart-discount label{color:#e4e4d7!important;font-size:11px!important}.gx-cart .g-cart-discount__field{border-color:#ffffff44!important;border-radius:8px;overflow:hidden}.gx-cart .g-cart-discount input{color:#f2eee5!important;background:transparent!important;min-width:0}.gx-cart .g-cart-discount input::placeholder{color:#aab7a4!important}.gx-cart .g-cart-discount button{color:#e8d29c!important;background:transparent!important}.gx-cart [data-discount-message]{color:#c9d0bf!important;font-size:10px!important}.gx-cart .g-cart-checkout{width:100%;background:#e5d4a8!important;color:#17382b!important;margin-top:18px}.gx-cart .g-cart-checkout:hover{background:#f2e4c2!important}.gx-cart .g-cart-checkout:disabled{opacity:.5;transform:none}.gx-cart .g-cart-continue,.gx-cart .g-cart-note{color:#17382b!important;border-color:#17382b22!important}.gx-cart .g-cart-note textarea{color:#17382b!important;background:#e9e9df!important;border:1px solid #17382b33!important;border-radius:12px;padding:15px}.gx-cart :focus-visible{outline:2px solid #b3934f;outline-offset:5px}.gx-discover{width:88%;max-width:1280px;margin:0 auto;padding:20px 0 90px}.gx-discover-head{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:30px}.gx-discover h2{font:400 clamp(33px,4vw,52px)/1.1 Georgia,serif;letter-spacing:-.035em;margin:12px 0;color:#17382b}.gx-discover h2 em{color:#819075;font-weight:400}.gx-discover-head>a{font:9px Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#17382b;border-bottom:1px solid #17382b44;padding-bottom:10px;text-decoration:none}.gx-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.gx-product{min-width:0;color:#17382b;text-decoration:none}.gx-product>div{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:#e7e4dc}.gx-product img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}.gx-product:hover img{transform:scale(1.055)}.gx-product>div>span{position:absolute;bottom:16px;right:16px;border-radius:50%;width:35px;height:35px;display:grid;place-items:center;background:#f2eee5e8}.gx-product p{font:21px/1.3 Georgia,serif;margin:16px 0 7px}.gx-product small{font:11px Arial,sans-serif;color:#6e7966}.gx-cart .gx-wait{opacity:0;transform:translateY(22px)}.gx-product,.gx-cart .g-cart-empty{transition:opacity .9s,transform .9s}
+@keyframes gx-arrive{from{opacity:0;transform:translateY(15px) scale(.85)}to{opacity:1;transform:none}}
+@media(max-width:900px){.gx-cart .g-cart-layout{grid-template-columns:1fr;gap:35px}.gx-cart .g-cart-summary{position:relative;top:0}.gx-cart .g-cart-heading-row{align-items:start;flex-direction:column;gap:0}.gx-cart .g-cart-hero{padding-top:40px!important}.gx-cart .g-cart-empty{padding:55px 7%!important;min-height:430px}.gx-cart .g-cart-empty h2{font-size:39px!important}.gx-cart .g-cart-item{grid-template-columns:90px minmax(0,1fr);gap:17px}.gx-cart .g-cart-item__image{width:90px!important;height:120px!important}.gx-cart .g-cart-item__price{grid-column:2;margin-top:-8px}.gx-cart .g-cart-item h2{font-size:22px!important}.gx-cart .g-cart-auto-label{display:none}.gx-discover-head{display:block}.gx-discover-head>a{display:inline-block;margin-top:12px}.gx-products{gap:15px;grid-template-columns:repeat(2,minmax(0,1fr))}.gx-product:nth-child(3){display:none}.gx-product p{font-size:18px}.gx-product>div{border-radius:17px}.gx-discover{padding-bottom:60px}}
+@media(prefers-reduced-motion:reduce){.gx-cart *{animation:none!important;transition:none!important}.gx-cart .gx-wait{opacity:1;transform:none}}
+.gx-cart [data-line-price],.gx-cart .g-cart-note summary span{color:#17382b!important}.gx-cart .g-cart-remove{border:0!important;padding:8px 0!important}.gx-cart .g-cart-item__image img{border-radius:18px!important}
+{% endstylesheet %}
+{% javascript %}
+(()=>{const root=document.querySelector('.gx-cart');if(!root||matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver'in window))return;const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.remove('gx-wait');observer.unobserve(entry.target)}}),{threshold:.1});root.querySelectorAll('.gx-product,.g-cart-empty').forEach(el=>{el.classList.add('gx-wait');observer.observe(el)});})();
+{% endjavascript %}
+
+</div>
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

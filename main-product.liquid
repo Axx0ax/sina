@@ -1,0 +1,309 @@
+<div class="pa"><nav class="pa-breadcrumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">GORONY</a><span>/</span><a href="{{ routes.all_products_collection_url }}">THE COLLECTION</a><span>/</span><span>{{ product.title | escape }}</span></nav>
+<div class="g-pdp">
+  <div class="g-pdp__media">
+    {%- assign first_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
+    {%- if first_image -%}
+      <img data-main-image src="{{ first_image | image_url: width: 900 }}" alt="{{ product.title | escape }}" width="900" height="1200">
+    {%- else -%}
+      <div style="aspect-ratio:3/4;background:var(--green-3);border:1px solid rgba(139,111,62,0.4);"></div>
+    {%- endif -%}
+
+    {%- assign image_count = 0 -%}
+    {%- for media in product.media -%}{%- if media.media_type == 'image' -%}{%- assign image_count = image_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+    {%- if image_count > 1 -%}
+      <div class="g-pdp__thumbs">
+        {%- assign thumbnail_index = 0 -%}
+        {%- for media in product.media -%}
+          {%- if media.media_type == 'image' -%}
+            {%- assign thumbnail_index = thumbnail_index | plus: 1 -%}
+            <button
+              type="button"
+              class="g-pdp__thumb{% if first_image and media.id == first_image.id %} g-pdp__thumb--active{% endif %}"
+              data-thumb
+              data-full="{{ media | image_url: width: 900 }}"
+              aria-label="View {{ product.title | escape }} image {{ thumbnail_index }}"
+              aria-pressed="{% if first_image and media.id == first_image.id %}true{% else %}false{% endif %}">
+              <img src="{{ media | image_url: width: 160 }}" alt="" width="160" height="213" loading="lazy">
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- for media in product.media -%}
+      {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+        {{ media | media_tag: image_size: '900x', autoplay: true, loop: true, muted: true, controls: false, style: 'width:100%;margin-top:16px;border:1px solid rgba(139,111,62,0.4);' }}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="g-pdp__info">
+    {%- if product.type != blank -%}<p class="g-card__cat" style="margin-top:0;">{{ product.type }}</p>{%- endif -%}
+    <h1 class="g-pdp__title">{{ product.title }}</h1>
+    <p class="g-pdp__price" data-price aria-live="polite" aria-atomic="true">{{ product.selected_or_first_available_variant.price | money }}</p>
+    {%- form 'product', product, id: 'gProductForm' -%}
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          <div class="g-pdp__option" data-option-group data-option-index="{{ forloop.index0 }}">
+            <p class="g-pdp__option-label">{{ option.name }}: <span data-option-chosen>{{ option.selected_value }}</span></p>
+            <div class="g-swatches">
+              {%- for value in option.values -%}
+                <button type="button" class="g-swatch{% if option.selected_value == value %} g-swatch--active{% endif %}" data-swatch data-value="{{ value | escape }}" aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}">{{ value }}</button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endunless -%}
+      <input type="hidden" name="id" data-variant-id value="{{ product.selected_or_first_available_variant.id }}">
+      <button type="submit" data-add-btn class="g-btn-solid" style="width:100%;margin-top:24px;" aria-live="polite" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+        {%- if product.selected_or_first_available_variant.available -%}Add to Cart{%- else -%}Sold Out{%- endif -%}
+      </button>
+    {%- endform -%}
+    <div id="gAddedNote" style="display:none;margin-top:16px;border:1px solid rgba(201,162,75,0.5);background:rgba(201,162,75,0.06);padding:14px 16px;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+      <span style="font-size:13px;letter-spacing:0.05em;color:var(--ivory);">Added to your bag.</span>
+      <span style="display:flex;gap:14px;align-items:center;">
+        <a href="{{ routes.cart_url }}" style="color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;font-size:12px;">View Bag</a>
+        <a href="{{ routes.cart_url }}/checkout" style="color:var(--green);background:var(--gold);padding:9px 16px;letter-spacing:0.15em;text-transform:uppercase;font-size:12px;">Checkout</a>
+      </span>
+    </div>
+    <p id="gAddedError" style="display:none;margin-top:12px;color:#e6b8b8;font-size:13px;" role="alert"></p>
+
+    {%- comment -%} shipping / returns / security, where the decision is made {%- endcomment -%}
+    <ul class="g-pdp__trust" style="list-style:none;margin:26px 0 0;padding:20px 0 0;border-top:1px solid rgba(139,111,62,0.3);display:grid;gap:11px;">
+      <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:rgba(245,240,230,0.72);"><span aria-hidden="true" style="color:var(--gold);">&#10022;</span> Dispatched within 1&ndash;3 business days, tracked</li>
+      <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:rgba(245,240,230,0.72);"><span aria-hidden="true" style="color:var(--gold);">&#10022;</span> 30-day returns on unopened items</li>
+      <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:rgba(245,240,230,0.72);"><span aria-hidden="true" style="color:var(--gold);">&#10022;</span> Secure checkout &middot; every message answered by the family</li>
+    </ul>
+
+    {%- comment -%}
+      Belt-and-braces: the CSV import removes the leaked "Description" heading
+      from the product data itself; these guards catch the plain variants in
+      case one is ever pasted back in. Only Liquid-native filters here.
+    {%- endcomment -%}
+    {%- assign pdp_body = product.description
+          | remove_first: '<h2>Description</h2>'
+          | remove_first: '<h3>Description</h3>'
+          | remove_first: '<h2><span>Description</span></h2>'
+          | remove_first: '<h3><span>Description</span></h3>'
+          | remove_first: '<h2><strong>Description</strong></h2>'
+          | remove_first: '<h3><strong>Description</strong></h3>' -%}
+    <div class="g-pdp__desc g-rte" style="margin-top:40px;border-top:1px solid rgba(139,111,62,0.3);padding-top:24px;">{{ pdp_body }}</div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var variants = [
+      {%- for variant in product.variants -%}
+        {
+          "id": {{ variant.id | json }},
+          "options": {{ variant.options | json }},
+          "available": {{ variant.available | json }},
+          "price": {{ variant.price | json }},
+          "image": {%- if variant.featured_image -%}{{ variant.featured_image | image_url: width: 900 | json }}{%- else -%}null{%- endif -%}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ];
+    var optionNames = [
+      {%- for option in product.options_with_values -%}
+        {{ option.name | json }}{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ];
+    var productImages = [
+      {%- assign image_index = 0 -%}
+      {%- for media in product.media -%}
+        {%- if media.media_type == 'image' -%}
+          {%- assign image_index = image_index | plus: 1 -%}
+          {
+            "src": {{ media | image_url: width: 900 | json }},
+            "alt": {{ media.alt | default: '' | json }}
+          }{%- unless image_index == image_count -%},{%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    ];
+    var form = document.getElementById('gProductForm');
+    if (!form) return;
+    var groups = form.querySelectorAll('[data-option-group]');
+    var idInput = form.querySelector('[data-variant-id]');
+    var btn = form.querySelector('[data-add-btn]');
+    var priceEl = document.querySelector('[data-price]');
+    var mainImg = document.querySelector('[data-main-image]');
+
+    function money(cents) {
+      if (window.Shopify && typeof window.Shopify.formatMoney === 'function') {
+        return window.Shopify.formatMoney(cents, {{ shop.money_format | json }});
+      }
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    function normalize(value) {
+      return (value || '').toString().toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    }
+
+    function compact(value) {
+      return normalize(value).replace(/\s+/g, '');
+    }
+
+    function absoluteUrl(url) {
+      if (!url) return '';
+      try {
+        return new URL(url, window.location.href).href;
+      } catch (e) {
+        return url;
+      }
+    }
+
+    function chosenValues() {
+      return Array.prototype.map.call(groups, function (g) {
+        var active = g.querySelector('.g-swatch--active');
+        return active ? active.getAttribute('data-value') : null;
+      });
+    }
+
+    function matchingImageForChoice(chosen) {
+      var colorIndex = optionNames.findIndex(function (name) {
+        var normalized = normalize(name);
+        return normalized.indexOf('color') !== -1 || normalized.indexOf('colour') !== -1 || normalized.indexOf('shade') !== -1;
+      });
+      if (colorIndex === -1) return null;
+
+      var selectedColor = chosen[colorIndex];
+      var selected = normalize(selectedColor);
+      var selectedCompact = compact(selectedColor);
+      if (!selected) return null;
+
+      return productImages.find(function (image) {
+        var haystack = normalize(image.alt + ' ' + image.src);
+        var haystackCompact = compact(image.alt + ' ' + image.src);
+        return haystack.indexOf(selected) !== -1 || haystackCompact.indexOf(selectedCompact) !== -1;
+      });
+    }
+
+    function setActiveThumb(src) {
+      var current = absoluteUrl(src);
+      document.querySelectorAll('[data-thumb]').forEach(function (thumb) {
+        var isActive = absoluteUrl(thumb.getAttribute('data-full')) === current;
+        thumb.classList.toggle('g-pdp__thumb--active', isActive);
+        thumb.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    function setMainImage(src) {
+      if (!mainImg || !src) return;
+      if (absoluteUrl(mainImg.getAttribute('src')) === absoluteUrl(src)) {
+        setActiveThumb(src);
+        return;
+      }
+
+      mainImg.style.opacity = '0';
+      window.setTimeout(function () {
+        mainImg.src = src;
+        mainImg.removeAttribute('srcset');
+        mainImg.style.opacity = '1';
+        setActiveThumb(src);
+      }, 120);
+    }
+
+    function update() {
+      var chosen = chosenValues();
+      var match = variants.find(function (v) {
+        return v.options.every(function (opt, i) { return opt === chosen[i]; });
+      });
+      if (!match) {
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = 'Unavailable';
+        }
+        return;
+      }
+      idInput.value = match.id;
+      if (priceEl) priceEl.textContent = money(match.price);
+      if (match.available) { btn.disabled = false; btn.textContent = 'Add to Cart'; }
+      else { btn.disabled = true; btn.textContent = 'Sold Out'; }
+
+      var fallbackImage = matchingImageForChoice(chosen);
+      setMainImage(match.image || (fallbackImage && fallbackImage.src));
+
+      if (window.history && window.history.replaceState) {
+        var url = new URL(window.location.href);
+        url.searchParams.set('variant', match.id);
+        window.history.replaceState({}, '', url.toString());
+      }
+    }
+
+    Array.prototype.forEach.call(groups, function (g) {
+      var label = g.querySelector('[data-option-chosen]');
+      g.addEventListener('click', function (e) {
+        var swatch = e.target.closest('[data-swatch]');
+        if (!swatch) return;
+        g.querySelectorAll('.g-swatch').forEach(function (s) {
+          s.classList.remove('g-swatch--active');
+          s.setAttribute('aria-pressed', 'false');
+        });
+        swatch.classList.add('g-swatch--active');
+        swatch.setAttribute('aria-pressed', 'true');
+        if (label) label.textContent = swatch.getAttribute('data-value');
+        update();
+      });
+    });
+
+    document.querySelectorAll('[data-thumb]').forEach(function (t) {
+      t.addEventListener('click', function () {
+        setMainImage(t.getAttribute('data-full'));
+      });
+    });
+
+    if (groups.length) update();
+    else if (mainImg) setActiveThumb(mainImg.getAttribute('src'));
+  })();
+</script>
+
+<script>
+  (function () {
+    var form = document.getElementById('gProductForm');
+    if (!form) return;
+    var btn = form.querySelector('[data-add-btn]');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!btn || btn.disabled) return;
+      var original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Adding...';
+      fetch('/cart/add.js', { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+        .then(function (r) {
+          if (!r.ok) return r.json().then(function (d) { throw new Error(d.description || d.message || 'Could not add to bag.'); });
+          return r.json();
+        })
+        .then(function () { return fetch('/cart.js', { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.json(); }); })
+        .then(function (cart) {
+          document.querySelectorAll('[data-cart-count]').forEach(function (el) { el.textContent = cart.item_count; });
+          var note = document.getElementById('gAddedNote');
+          if (note) note.style.display = 'flex';
+          btn.textContent = 'Added';
+          window.setTimeout(function () { btn.disabled = false; btn.textContent = original; }, 1500);
+        })
+        .catch(function (err) {
+          var errEl = document.getElementById('gAddedError');
+          if (errEl) { errEl.textContent = err.message; errEl.style.display = 'block'; window.setTimeout(function () { errEl.style.display = 'none'; }, 5000); }
+          btn.disabled = false;
+          btn.textContent = original;
+        });
+    });
+  })();
+</script>
+<div class="pa-closing"><p>THE HOUSE OF GORONY</p><h2>A considered choice.<br><em>A personal ritual.</em></h2><a href="/pages/our-story">Discover our story ↗</a></div>
+<dialog class="pa-zoom" aria-label="Product image enlarged"><button type="button" class="pa-close" aria-label="Close enlarged image">Close ×</button><img alt="" width="1400" height="1400"></dialog>
+{% stylesheet %}
+.pa{--pa-ink:#183b2c;--pa-cream:#f2eee5;background:var(--pa-cream);color:var(--pa-ink);padding:140px 6% 0;font-family:Arial,sans-serif}.pa *{box-sizing:border-box}.pa-breadcrumb{max-width:1320px;margin:0 auto 28px;display:flex;gap:12px;font:9px/1.7 Arial,sans-serif;letter-spacing:.1em;color:#707967}.pa-breadcrumb a{color:inherit;text-decoration:none}.pa .g-pdp{width:100%!important;max-width:1320px!important;margin:0 auto!important;padding:0 0 90px!important;display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)!important;gap:7%!important;align-items:start!important;background:transparent!important}.pa .g-pdp__media{grid-column:1!important;grid-row:1!important;min-width:0;position:sticky!important;top:132px!important}.pa .g-pdp__media>[data-main-image],.pa .g-pdp__media>img{width:100%!important;max-width:none!important;height:auto!important;aspect-ratio:1/1.08;object-fit:contain!important;background:#eeece5!important;border:0!important;border-radius:28px!important;display:block;transition:opacity .3s,transform 1.2s!important}.pa .g-pdp__media video,.pa .g-pdp__media iframe{border-radius:22px;max-width:100%}.pa .g-pdp__info{grid-column:2!important;grid-row:1!important;min-width:0;padding:25px 0 0!important;background:transparent!important}.pa .g-pdp__title{font:400 clamp(40px,4.6vw,70px)/1.03 Georgia,serif!important;letter-spacing:-.045em!important;color:var(--pa-ink)!important;margin:18px 0 22px!important}.pa .g-card__cat{font:9px Arial,sans-serif!important;letter-spacing:.2em!important;color:#8b7448!important}.pa .g-pdp__price{font:19px Arial,sans-serif!important;color:var(--pa-ink)!important;margin:0 0 25px!important}.pa .g-pdp__thumbs{display:flex!important;gap:10px!important;margin-top:14px!important;overflow-x:auto;padding:4px;scrollbar-width:thin}.pa .g-pdp__thumb{width:66px!important;height:78px!important;min-width:66px;padding:3px!important;border:1px solid transparent!important;border-radius:12px!important;background:#e4e4d8!important;overflow:hidden;opacity:.6;transition:opacity .3s,border-color .3s}.pa .g-pdp__thumb img{width:100%;height:100%;object-fit:contain;border-radius:9px}.pa .g-pdp__thumb--active,.pa .g-pdp__thumb:hover{opacity:1;border-color:#897244!important}.pa .g-pdp__option-label{font:11px Arial,sans-serif!important;letter-spacing:.04em;color:#62705d!important}.pa .g-pdp__option-label span{color:var(--pa-ink)!important}.pa .g-swatches{display:flex;flex-wrap:wrap;gap:8px}.pa .g-swatch{background:transparent!important;color:var(--pa-ink)!important;border:1px solid #173b2c33!important;border-radius:25px!important;padding:12px 16px!important;font:11px Arial,sans-serif!important;min-height:42px;transition:background .3s,transform .3s}.pa .g-swatch--active{background:#183b2c!important;color:#f2eee5!important;border-color:#183b2c!important}.pa .g-swatch:hover{transform:translateY(-2px)}.pa [data-add-btn]{background:#183b2c!important;color:#f2eee5!important;border:1px solid #183b2c!important;border-radius:50px!important;min-height:59px;font:11px Arial,sans-serif!important;letter-spacing:.14em!important;transition:background .3s,transform .3s,box-shadow .3s!important}.pa [data-add-btn]:hover:not(:disabled){background:#345540!important;transform:translateY(-2px);box-shadow:0 12px 30px #173b2c18}.pa [data-add-btn]:disabled{opacity:.55}.pa #gAddedNote{border-radius:14px;background:#e4e8d9!important;border-color:#b3bea4!important}.pa #gAddedNote span,.pa #gAddedNote a{color:#183b2c!important}.pa #gAddedError{color:#972f26!important}.pa .g-pdp__trust{border-color:#183b2c22!important;padding-top:22px!important;gap:12px!important}.pa .g-pdp__trust li{color:#697661!important;font-size:11px!important;line-height:1.6}.pa .g-pdp__desc{border-color:#183b2c22!important;color:#62705d!important;font:14px/1.95 Arial,sans-serif!important;margin-top:30px!important;overflow-wrap:anywhere}.pa .g-pdp__desc p,.pa .g-pdp__desc li{color:#62705d!important;font:13px/1.95 Arial,sans-serif!important}.pa .g-pdp__desc h2,.pa .g-pdp__desc h3{color:#183b2c!important;font:28px Georgia,serif!important}.pa .g-pdp__desc a{color:#183b2c!important}.pa .pa-detail{border-bottom:1px solid #183b2c22;padding:0}.pa .pa-detail summary{list-style:none;display:flex;align-items:center;justify-content:space-between;padding:22px 0;font:23px Georgia,serif;color:#183b2c;cursor:pointer}.pa .pa-detail summary::-webkit-details-marker{display:none}.pa .pa-detail summary:after{content:'+';font:21px Arial,sans-serif;color:#8a754b}.pa .pa-detail[open] summary:after{content:'−'}.pa .pa-detail>div{padding-bottom:22px}.pa .pa-detail ul{padding-left:18px}.pa-zoom-button{display:block;margin:12px 0 0 auto;background:transparent;border:0;border-bottom:1px solid #183b2c44;padding:9px 0;color:#66735f;font:9px Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase;cursor:pointer}.pa-closing{margin:0 -6.82%;padding:75px 7%;background:#e3e7d9;text-align:center;border-radius:35px 35px 0 0}.pa-closing p{font:9px Arial,sans-serif;letter-spacing:.19em;color:#897448}.pa-closing h2{font:400 clamp(37px,5vw,68px)/1.1 Georgia,serif;letter-spacing:-.04em;color:#183b2c;margin:25px 0}.pa-closing em{color:#7d8c70}.pa-closing a{color:#183b2c;font:10px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid #183b2c44;padding-bottom:12px;display:inline-block}.pa-zoom{max-width:95vw;width:900px;height:90svh;max-height:90svh;border:0;border-radius:24px;padding:55px 20px 20px;background:#f5f2ea}.pa-zoom::backdrop{background:#081d16d9;backdrop-filter:blur(7px)}.pa-zoom img{width:100%;height:100%;object-fit:contain}.pa-close{position:absolute;right:22px;top:18px;border:0;background:transparent;color:#183b2c;font:12px Arial,sans-serif;cursor:pointer;padding:8px}.pa :focus-visible{outline:2px solid #ad8c48;outline-offset:5px}.pa-cursor{position:fixed;left:0;top:0;width:30px;height:30px;border:1px solid #a58b5799;border-radius:50%;pointer-events:none;z-index:9999;opacity:0}.pa-cursor:after{content:'';position:absolute;left:12px;top:12px;width:4px;height:4px;border-radius:50%;background:#a58b57}.pa .jdgm-widget{color:#183b2c!important}.pa-wait{opacity:0;transform:translateY(20px)}.pa-closing{transition:opacity .9s,transform .9s}
+@media(max-width:800px){.pa{padding:135px 6% 0}.pa .g-pdp{grid-template-columns:1fr!important;gap:25px!important;padding-bottom:55px!important}.pa .g-pdp__media{position:relative!important;top:0!important;grid-column:1!important;grid-row:1!important}.pa .g-pdp__info{display:block!important;grid-column:1!important;grid-row:2!important;padding-top:6px!important}.pa .g-pdp__title{font-size:43px!important}.pa .g-pdp__media>[data-main-image],.pa .g-pdp__media>img{border-radius:23px!important;max-height:65svh;aspect-ratio:1}.pa-breadcrumb{font-size:8px;margin-bottom:20px;flex-wrap:wrap}.pa-closing{padding:60px 7%}.pa-cursor{display:none}.pa .g-pdp__thumb{width:58px!important;min-width:58px;height:66px!important}}
+@media(prefers-reduced-motion:reduce){.pa *{animation:none!important;transition:none!important}.pa-wait{opacity:1;transform:none}.pa-cursor{display:none}}
+body:has(.pa) #judgeme_product_reviews{padding:60px 6%!important;background:#10281e!important;border-top:1px solid #c8ad7633}body:has(.pa) #judgeme_product_reviews h2{font:400 36px Georgia,serif!important}body:has(.pa) #judgeme_product_reviews button{border-radius:24px!important}
+{% endstylesheet %}
+{% javascript %}
+(()=>{const root=document.querySelector('.pa');if(!root)return;const reduced=matchMedia('(prefers-reduced-motion: reduce)'),media=root.querySelector('.g-pdp__media'),main=root.querySelector('[data-main-image]'),dialog=root.querySelector('.pa-zoom'),body=root.querySelector('.g-pdp__desc');if(main&&media&&dialog){const zoom=document.createElement('button');zoom.type='button';zoom.className='pa-zoom-button';zoom.textContent='A closer look +';media.append(zoom);zoom.addEventListener('click',()=>{const img=dialog.querySelector('img');img.src=main.currentSrc||main.src;img.alt=main.alt;dialog.showModal()});dialog.querySelector('button').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});}if(body){const nodes=[...body.childNodes];let panel;nodes.forEach(node=>{if(node.nodeType===1&&/^H[23]$/.test(node.tagName)){const detail=document.createElement('details');detail.className='pa-detail';const summary=document.createElement('summary');summary.textContent=node.textContent;panel=document.createElement('div');detail.append(summary,panel);body.insertBefore(detail,node);node.remove();detail.addEventListener('toggle',()=>{if(detail.open&&!reduced.matches)detail.lastElementChild.animate([{opacity:0,transform:'translateY(7px)'},{opacity:1,transform:'none'}],{duration:350,easing:'ease-out'})});}else if(panel)panel.append(node);});}if(!reduced.matches){const cursor=document.createElement('div');cursor.className='pa-cursor';cursor.setAttribute('aria-hidden','true');root.append(cursor);root.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;cursor.style.opacity='1';cursor.style.transform='translate('+(e.clientX-15)+'px,'+(e.clientY-15)+'px)'});root.addEventListener('pointerleave',()=>cursor.style.opacity='0');if(main)main.animate([{opacity:0,transform:'scale(.96)'},{opacity:1,transform:'scale(1)'}],{duration:1000,easing:'cubic-bezier(.2,.7,.2,1)'});if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.remove('pa-wait');observer.unobserve(e.target)}}));const closing=root.querySelector('.pa-closing');closing.classList.add('pa-wait');observer.observe(closing);}}})();
+{% endjavascript %}
+
+</div>
+{% schema %}
+{ "name": "Product", "settings": [] }
+{% endschema %}

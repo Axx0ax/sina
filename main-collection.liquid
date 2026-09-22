@@ -1,0 +1,12 @@
+{% render 'g-luxury-collection', source_collection: collection, products_per_page: section.settings.products_per_page, eyebrow: section.settings.eyebrow, heading: collection.title, intro: collection.description, featured_product: section.settings.featured_product %}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Founding Collection" },
+    { "type": "product", "id": "featured_product", "label": "Featured product", "info": "Optional. Leave empty to feature the first product automatically." },
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 6, "max": 50, "step": 2, "default": 50 }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "replica-home",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

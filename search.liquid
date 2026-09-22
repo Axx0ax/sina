@@ -1,0 +1,20 @@
+<section class="g-section" style="padding-top:140px;">
+  <div class="g-wrap">
+    <h1 class="g-h2">Search</h1>
+    <form action="{{ routes.search_url }}" method="get" class="g-center" style="margin-top:24px;">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search" style="padding:12px 16px;background:var(--green-3);color:var(--ivory);border:1px solid var(--bronze);min-width:280px;">
+    </form>
+    {%- if search.performed -%}
+      <div class="g-grid">
+        {%- for item in search.results -%}
+          <a href="{{ item.url }}" class="g-card">
+            {%- if item.featured_image -%}<img class="g-card__img" src="{{ item.featured_image | image_url: width: 600 }}" alt="{{ item.title | escape }}" width="600" height="800">{%- endif -%}
+            <h3 class="g-card__name" style="padding:0 24px;">{{ item.title }}</h3>
+          </a>
+        {%- else -%}
+          <p class="g-intro">No results.</p>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>

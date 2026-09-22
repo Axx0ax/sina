@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" data-theme="default-dark" style="color-scheme:dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d1f18">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="icon" type="image/png" href="{{ 'gorony-favicon-v2.png' | asset_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="{{ 'styles-compiled.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
+    <title>{{ page_title }}{% unless page_title contains shop.name %} &middot; {{ shop.name }}{% endunless %}</title>
+    {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ 'gorony-og-v2.png' | asset_url }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ 'gorony-og-v2.png' | asset_url }}">
+    {{ content_for_header }}
+  </head>
+  <body class="bg-q-background-primary text-q-text-primary">
+    <a class="g-skip-link" href="#MainContent">Skip to content</a>
+    {% render 'g-header' %}
+    <main id="MainContent" tabindex="-1">{{ content_for_layout }}</main>
+    
+    <script>
+      (function () {
+        var btn = document.getElementById('gMobileMenuButton');
+        var nav = document.getElementById('gMobileNav');
+        if (!btn || !nav) return;
+
+        function setMenuOpen(open) {
+          nav.style.display = open ? 'flex' : 'none';
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        }
+
+        btn.addEventListener('click', function () {
+          setMenuOpen(btn.getAttribute('aria-expanded') !== 'true');
+        });
+        nav.addEventListener('click', function (event) {
+          if (event.target.closest('a')) setMenuOpen(false);
+        });
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+            setMenuOpen(false);
+            btn.focus();
+          }
+        });
+        window.addEventListener('resize', function () {
+          if (window.innerWidth >= 768) setMenuOpen(false);
+        });
+
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.querySelectorAll('video[autoplay]').forEach(function (video) {
+            video.pause();
+            video.removeAttribute('autoplay');
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

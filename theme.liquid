@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" data-theme="default-dark" style="color-scheme:dark">
+  <head> 
+    <meta name="facebook-domain-verification" content="6zhb1j7psrjgms1d9sgeonvxgoc3g1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d1f18">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="icon" type="image/png" href="{{ 'gorony-favicon-v2.png' | asset_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="{{ 'styles-compiled.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
+    <title>{{ page_title }}{% unless page_title contains shop.name %} &middot; {{ shop.name }}{% endunless %}</title>
+    {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+    <meta property="og:site_name" content="{{ shop.name }}">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:type" content="{% if template contains 'product' %}product{% else %}website{% endif %}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    {% if page_description %}<meta property="og:description" content="{{ page_description | escape }}">{% endif %}
+    <meta property="og:image" content="{% if template contains 'product' and product.featured_image %}https:{{ product.featured_image | image_url: width: 1200 }}{% else %}{{ 'gorony-og-v2.png' | asset_url }}{% endif %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{% if template contains 'product' and product.featured_image %}https:{{ product.featured_image | image_url: width: 1200 }}{% else %}{{ 'gorony-og-v2.png' | asset_url }}{% endif %}">
+
+    {%- comment -%}
+      Structured data. This is what lets Google show price, stock and (once you
+      have reviews) stars next to your listing instead of a plain blue link.
+    {%- endcomment -%}
+    {%- if template contains 'product' and product != blank -%}
+      {%- assign pd = product.description | strip_html | strip | remove_first: 'Description' | strip | truncate: 400 -%}
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": {{ product.title | json }},
+        "url": {{ shop.url | append: product.url | json }},
+        "description": {{ pd | json }},
+        "image": [{% for img in product.images limit: 5 %}{{ img | image_url: width: 1200 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+        "brand": { "@type": "Brand", "name": {{ shop.name | json }} },
+        {% if product.selected_or_first_available_variant.sku != blank %}"sku": {{ product.selected_or_first_available_variant.sku | json }},{% endif %}
+        "offers": {
+          "@type": "Offer",
+          "url": {{ shop.url | append: product.url | json }},
+          "priceCurrency": {{ shop.currency | json }},
+          "price": {{ product.selected_or_first_available_variant.price | divided_by: 100.0 | json }},
+          "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+          "itemCondition": "https://schema.org/NewCondition"
+        }
+      }
+      </script>
+    {%- else -%}
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ shop.url | json }},
+        "logo": {{ 'gorony-og-v2.png' | asset_url | prepend: 'https:' | json }},
+        "description": {{ shop.description | default: 'Facial skincare and makeup from a family founded house.' | json }},
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "Support@gorony.com"
+        }
+      }
+      </script>
+    {%- endif -%}
+    {{ content_for_header }}
+  </head>
+  <body class="bg-q-background-primary text-q-text-primary">
+    {% render 'g-promo-popup' %}
+    <a class="g-skip-link" href="#MainContent">Skip to content</a>
+    {% render 'g-header' %}
+    <main id="MainContent" tabindex="-1">{{ content_for_layout }}</main>
+    {% render 'g-footer' %}
+    <script>
+      (function () {
+        var btn = document.getElementById('gMobileMenuButton');
+        var nav = document.getElementById('gMobileNav');
+        if (!btn || !nav) return;
+
+        function setMenuOpen(open) {
+          nav.style.display = open ? 'flex' : 'none';
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        }
+
+        btn.addEventListener('click', function () {
+          setMenuOpen(btn.getAttribute('aria-expanded') !== 'true');
+        });
+        nav.addEventListener('click', function (event) {
+          if (event.target.closest('a')) setMenuOpen(false);
+        });
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+            setMenuOpen(false);
+            btn.focus();
+          }
+        });
+        window.addEventListener('resize', function () {
+          if (window.innerWidth >= 768) setMenuOpen(false);
+        });
+
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.querySelectorAll('video[autoplay]').forEach(function (video) {
+            video.pause();
+            video.removeAttribute('autoplay');
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
