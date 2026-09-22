@@ -1,0 +1,1063 @@
+{% doc %}
+  Shared Gorony footer with motion-aware interactions and agency attribution.
+{% enddoc %}
+{% # theme-check-disable MissingAsset %}
+<footer class="gf" data-gorony-footer>
+  <div class="gf-aura" aria-hidden="true"></div>
+  <div class="gf-inner">
+    <div class="gf-invitation"><div><p class="gf-label">The house of Gorony</p><h2>Make room for<br><em>something beautiful.</em></h2></div><a class="gf-discover" href="{{ routes.all_products_collection_url }}"><span class="gf-arrow" aria-hidden="true">↗</span><span>Explore the collection</span></a></div>
+    <div class="gf-columns"><div class="gf-house"><a class="gf-brand" href="{{ routes.root_url }}"><img src="{{ 'gorony-mark-v2.png' | asset_url }}" width="64" height="64" alt="Gorony home"><span>GORONY</span></a><p>Facial skincare and makeup from a family-founded house.<br>Crafted for her.</p><span class="gf-est">Founded by Sina Gorony · Est. 2026</span></div>
+      <nav aria-label="Explore Gorony"><h3 class="gf-label">Explore</h3><a href="{{ routes.all_products_collection_url }}">The collection</a><a href="/pages/our-story">Our story</a><a href="/pages/faq">Frequently asked questions</a></nav>
+      <nav aria-label="Gorony customer care"><h3 class="gf-label">Here for you</h3><a href="/pages/contact">Contact the house</a>{% if shop.shipping_policy != blank %}<a href="{{ shop.shipping_policy.url }}">Shipping</a>{% endif %}{% if shop.refund_policy != blank %}<a href="{{ shop.refund_policy.url }}">Returns &amp; refunds</a>{% endif %}</nav>
+    </div>
+    <div class="gf-signature" aria-hidden="true"><span>GORONY</span><img class="gf-signature-crest" src="{{ 'gorony-mark-v2.png' | asset_url }}" width="130" height="130" alt=""></div>
+    <div class="gf-bottom"><p>© {{ 'now' | date: '%Y' }} Gorony. All rights reserved.</p><nav aria-label="Store policies">{% if shop.privacy_policy != blank %}<a href="{{ shop.privacy_policy.url }}">Privacy</a>{% endif %}{% if shop.terms_of_service != blank %}<a href="{{ shop.terms_of_service.url }}">Terms</a>{% endif %}</nav><a class="gf-credit" href="https://www.axiomagecny.com/" target="_blank" rel="noopener noreferrer" aria-label="Made by AXIOM agency, opens in a new tab"><span>Made by</span> <strong>AXIOM</strong><span class="gf-credit-arrow" aria-hidden="true">↗</span></a><button class="gf-top" type="button">Back to top <span aria-hidden="true">↑</span></button></div>
+  </div>
+</footer>
+{% stylesheet %}
+.gf{position:relative;isolation:isolate;overflow:hidden;background:#0d211a;color:#f3efe6;padding:80px 0 26px;font-family:Arial,sans-serif;border-top:1px solid #b99a5c55}.gf *{box-sizing:border-box}.gf a{color:inherit;text-decoration:none}.gf h2,.gf h3,.gf p{margin:0}.gf-inner{position:relative;z-index:1;width:88%;max-width:1400px;margin:auto}.gf-aura{position:absolute;z-index:0;inset:0;pointer-events:none;background:radial-gradient(ellipse at var(--gf-x,80%) var(--gf-y,20%),#bd9d5030,transparent 55%);opacity:.75}.gf-invitation{display:flex;align-items:center;justify-content:space-between;gap:40px;padding-bottom:65px;border-bottom:1px solid #c9a24b35}.gf-label{font-size:10px!important;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:#c9b47f;line-height:1.7}.gf h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(36px,4.8vw,74px);line-height:1.1;letter-spacing:-.04em;margin-top:24px}.gf h2 em{color:#c9b47f;font-weight:400}.gf-discover{display:flex;align-items:center;flex-direction:column;gap:20px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;flex-shrink:0}.gf-arrow{display:grid;place-items:center;width:110px;height:110px;border-radius:50%;border:1px solid #c9b47f80;font-size:46px;font-weight:300;transition:transform .6s,background .4s,color .4s}.gf-discover:hover .gf-arrow{transform:rotate(45deg);background:#c9b47f;color:#0d211a}.gf-columns{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:60px;padding:60px 0}.gf-brand{display:inline-flex;gap:15px;align-items:center;color:#c9b47f!important;font-family:Georgia,serif;font-size:22px;letter-spacing:.2em}.gf-brand img{object-fit:contain;width:55px;height:55px}.gf-house p{font-size:13px;line-height:1.9;max-width:300px;color:#c0c7bd;margin:20px 0}.gf-est{font-size:10px;letter-spacing:.04em;color:#b7bbac}.gf-columns nav{display:flex;align-items:flex-start;flex-direction:column;gap:15px}.gf-columns nav h3{margin-bottom:10px}.gf-columns nav a{font-size:13px;color:#d2d7cd}.gf nav a{position:relative;padding-bottom:4px;transition:color .3s}.gf nav a:after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:#c9b47f;transform:scaleX(0);transform-origin:left;transition:transform .4s}.gf nav a:hover{color:#e5c888}.gf nav a:hover:after{transform:scaleX(1)}.gf-signature{display:flex;align-items:center;justify-content:space-between;gap:30px;border-bottom:1px solid #c9a24b35;padding:10px 0 30px;color:#c9b47f}.gf-signature>span{font-family:Georgia,serif;font-size:clamp(60px,14.4vw,230px);line-height:1;letter-spacing:.07em;background:linear-gradient(110deg,#8c784d 10%,#e2ce9b 42%,#b29965 70%);background-clip:text;-webkit-background-clip:text;color:transparent}.gf-signature svg{width:clamp(60px,10vw,155px);flex-shrink:0;stroke:#c9b47f;stroke-width:.65;transition:transform 1.5s}.gf-signature:hover svg{transform:rotate(60deg)}.gf-bottom{display:flex;justify-content:space-between;align-items:center;gap:24px;padding-top:26px;flex-wrap:wrap;font-size:10px;color:#bec5b9}.gf-bottom nav{display:flex;gap:20px}.gf-credit{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid #c9a24b40;border-radius:30px;transition:background .3s,border-color .3s}.gf-credit strong{font-size:11px;letter-spacing:.13em;color:#ddc488;font-weight:500}.gf-credit-arrow{display:inline-block;transition:transform .3s}.gf-credit:hover{background:#c9a24b15;border-color:#c9a24b}.gf-credit:hover .gf-credit-arrow{transform:translate(2px,-2px)}.gf-top{border:0;background:none;color:#d5c08a;font:inherit;cursor:pointer;padding:10px 0}.gf-top span{display:inline-block;margin-left:9px;transition:transform .3s}.gf-top:hover span{transform:translateY(-4px)}.gf a:focus-visible,.gf button:focus-visible{outline:2px solid #e2ce9b;outline-offset:6px}.gf.gf-animated .gf-invitation,.gf.gf-animated .gf-columns,.gf.gf-animated .gf-signature{transition:opacity .9s,transform .9s}.gf.gf-animated.gf-waiting .gf-invitation,.gf.gf-animated.gf-waiting .gf-columns,.gf.gf-animated.gf-waiting .gf-signature{opacity:0;transform:translateY(22px)}.gf.gf-animated .gf-columns{transition-delay:.1s}.gf.gf-animated .gf-signature{transition-delay:.2s}
+@media(max-width:760px){.gf{padding-top:55px}.gf-invitation{align-items:flex-start;flex-direction:column;gap:30px;padding-bottom:40px}.gf-discover{flex-direction:row;gap:20px}.gf-arrow{width:65px;height:65px;font-size:32px}.gf-columns{grid-template-columns:1fr 1fr;gap:35px 20px;padding:40px 0}.gf-house{grid-column:1/-1}.gf-signature{gap:10px;padding-bottom:24px}.gf-signature>span{font-size:13vw;letter-spacing:.025em}.gf-signature svg{width:50px}.gf-bottom{gap:22px;font-size:10px}.gf-bottom>p{width:100%}.gf-credit{margin-left:auto}.gf-top{width:100%;text-align:left}.gf-columns nav a{font-size:12px;line-height:1.6}}
+@media(prefers-reduced-motion:reduce){.gf *{transition:none!important;animation:none!important}.gf.gf-animated.gf-waiting .gf-invitation,.gf.gf-animated.gf-waiting .gf-columns,.gf.gf-animated.gf-waiting .gf-signature{opacity:1;transform:none}}
+{% endstylesheet %}
+{% javascript %}
+(()=>{document.querySelectorAll('[data-gorony-footer]').forEach(footer=>{if(footer.dataset.ready)return;footer.dataset.ready='true';const reduced=matchMedia('(prefers-reduced-motion: reduce)');if(!reduced.matches&&'IntersectionObserver'in window){footer.classList.add('gf-animated','gf-waiting');const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){footer.classList.remove('gf-waiting');observer.disconnect();}},{threshold:.08});observer.observe(footer);}let frame=0;footer.addEventListener('pointermove',e=>{if(reduced.matches||e.pointerType!=='mouse'||frame)return;frame=requestAnimationFrame(()=>{const r=footer.getBoundingClientRect();footer.style.setProperty('--gf-x',((e.clientX-r.left)/r.width*100)+'%');footer.style.setProperty('--gf-y',((e.clientY-r.top)/r.height*100)+'%');frame=0;});},{passive:true});footer.querySelector('.gf-top').addEventListener('click',()=>{window.scrollTo({top:0,behavior:reduced.matches?'instant':'smooth'});const brand=document.querySelector('header a[href="/"]');if(brand)brand.focus({preventScroll:true});});});})();
+{% endjavascript %}
+
+
+{%- comment -%}
+  GORONY — tapping a photo also picks that shade (added 28 Aug 2026)
+  Runs on every page but exits instantly unless the page is a product
+  with a shade list. Nothing here changes how the shade buttons behave.
+{%- endcomment -%}
+
+<script>
+(function () {
+  var thumbs = document.querySelectorAll('[data-thumb]');
+  if (!thumbs.length) return;
+
+  var form = document.getElementById('gProductForm');
+  if (!form) return;
+
+  var group = form.querySelector('[data-option-group]');
+  if (!group) return; /* product has no shades - nothing to sync */
+
+  /* reduce any image URL to just its filename, so the two formats match */
+  function fileKey(url) {
+    if (!url) return '';
+    try { url = new URL(url, window.location.href).pathname; } catch (e) {}
+    return url.split('/').pop().split('?')[0].toLowerCase();
+  }
+
+  var handle = (window.location.pathname.split('/products/')[1] || '')
+                 .split('?')[0].replace(/\/$/, '');
+  if (!handle) return;
+
+  var photoToShade = null;
+
+  fetch('/products/' + handle + '.js', { headers: { Accept: 'application/json' } })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (product) {
+      if (!product || !product.variants) return;
+      photoToShade = {};
+      product.variants.forEach(function (v) {
+        if (v.featured_image && v.featured_image.src) {
+          photoToShade[fileKey(v.featured_image.src)] = v.option1;
+        }
+      });
+      /* tell screen readers the thumbnail is a shade, not just "image 3" */
+      thumbs.forEach(function (t) {
+        var shade = photoToShade[fileKey(t.getAttribute('data-full'))];
+        if (shade) t.setAttribute('aria-label', 'Show ' + shade);
+      });
+    })
+    .catch(function () { /* blocked or offline - thumbnails work as before */ });
+
+  document.addEventListener('click', function (e) {
+    if (!photoToShade || !e.target.closest) return;
+
+    var thumb = e.target.closest('[data-thumb]');
+    if (!thumb) return;
+
+    var shade = photoToShade[fileKey(thumb.getAttribute('data-full'))];
+    if (!shade) return; /* an extra photo, not a shade - leave it alone */
+
+    var swatch = null;
+    group.querySelectorAll('[data-swatch]').forEach(function (s) {
+      if (s.getAttribute('data-value') === shade) swatch = s;
+    });
+    if (!swatch || swatch.classList.contains('g-swatch--active')) return;
+
+    /* stop the theme's picture-only handler, then let the theme's own
+       shade handler do everything: shade, price, variant, picture, URL */
+    e.stopPropagation();
+    swatch.click();
+  }, true);
+})();
+</script>
+
+<style>
+  .g-srch-bar{display:flex!important;align-items:center;gap:11px;width:100%;margin:0 0 20px!important;padding:14px 20px!important;background:rgba(245,240,230,0.04);border:1px solid rgba(201,162,75,0.42);border-radius:999px;cursor:text;text-align:left;}
+  .g-srch-bar svg{width:17px!important;height:17px!important;color:#C9A24B;flex:0 0 auto;}
+  .g-srch-bar span{font-family:Jost,Arial,sans-serif!important;font-size:12px!important;letter-spacing:.18em!important;text-transform:uppercase;color:rgba(245,240,230,0.5)!important;}
+  .g-srch-navitem{display:flex!important;align-items:center;gap:10px;padding:12px 0!important;font-family:Jost,Arial,sans-serif!important;font-size:12px!important;letter-spacing:.2em!important;text-transform:uppercase;color:#C9A24B!important;background:none;border:0;width:100%;text-align:left;cursor:pointer;}
+  .g-srch-navitem svg{width:15px!important;height:15px!important;}
+  .g-srch-panel{position:fixed;inset:0;z-index:60;display:none;background:#0D1F18;}
+  .g-srch-panel[data-open="1"]{display:block;}
+  .g-srch-inner{max-width:720px;margin:0 auto;padding:22px 22px 32px;height:100%;display:flex;flex-direction:column;}
+  .g-srch-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;}
+  .g-srch-eyebrow{font-family:Jost,Arial,sans-serif!important;font-size:10px!important;letter-spacing:.34em!important;text-transform:uppercase;color:#8B6F3E!important;}
+  .g-srch-close{background:none;border:0;color:#C9A24B!important;cursor:pointer;font-size:11px!important;letter-spacing:.22em!important;text-transform:uppercase;font-family:Jost,Arial,sans-serif!important;padding:8px 0 8px 16px;line-height:1!important;}
+  .g-srch-field{display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(201,162,75,0.5);padding-bottom:12px;}
+  .g-srch-field svg{width:20px!important;height:20px!important;color:#C9A24B;flex:0 0 auto;}
+  .g-srch-input{flex:1;background:transparent;border:0;color:#F5F0E6!important;font-family:"Playfair Display",Georgia,serif!important;font-size:25px!important;padding:2px 0;outline:none;}
+  .g-srch-input::placeholder{color:rgba(245,240,230,0.28)!important;}
+  .g-srch-hint{font-family:Jost,Arial,sans-serif!important;font-size:10px!important;letter-spacing:.26em!important;text-transform:uppercase;color:rgba(245,240,230,0.4)!important;margin:18px 0 4px!important;}
+  .g-srch-results{overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;}
+  .g-srch-item{display:flex!important;gap:16px;align-items:center;padding:14px 0!important;border-bottom:1px solid rgba(139,111,62,0.2);text-decoration:none;}
+  .g-srch-item img{width:58px!important;height:72px!important;object-fit:contain!important;background:#fff;padding:4px;flex:0 0 auto;}
+  .g-srch-cat{display:block;font-family:Jost,Arial,sans-serif!important;font-size:9px!important;letter-spacing:.24em!important;text-transform:uppercase;color:#8B6F3E!important;margin-bottom:4px!important;}
+  .g-srch-name{display:block;font-family:"Playfair Display",Georgia,serif!important;color:#F5F0E6!important;font-size:17px!important;line-height:1.25!important;}
+  .g-srch-price{display:block;font-family:Jost,Arial,sans-serif!important;color:#C9A24B!important;font-size:12px!important;letter-spacing:.1em!important;margin-top:5px!important;}
+  .g-srch-all{display:block;text-align:center;margin-top:22px;color:#C9A24B!important;font-family:Jost,Arial,sans-serif!important;font-size:11px!important;letter-spacing:.26em!important;text-transform:uppercase;}
+</style>
+
+<script>
+(function () {
+  var ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.8-3.8"></path></svg>';
+
+  var panel = document.createElement('div');
+  panel.className = 'g-srch-panel';
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-modal', 'true');
+  panel.setAttribute('aria-label', 'Search products');
+  panel.innerHTML =
+    '<div class="g-srch-inner">' +
+      '<div class="g-srch-head">' +
+        '<span class="g-srch-eyebrow">Search the House</span>' +
+        '<button type="button" class="g-srch-close" aria-label="Close search">Close</button>' +
+      '</div>' +
+      '<div class="g-srch-field">' + ICON +
+        '<input class="g-srch-input" type="search" autocomplete="off" placeholder="What are you looking for?" aria-label="Search products">' +
+      '</div>' +
+      '<p class="g-srch-hint">Type to search</p>' +
+      '<div class="g-srch-results"></div>' +
+    '</div>';
+  document.body.appendChild(panel);
+
+  var input   = panel.querySelector('.g-srch-input');
+  var results = panel.querySelector('.g-srch-results');
+  var hint    = panel.querySelector('.g-srch-hint');
+  var IDLE    = 'Type to search';
+
+  function openPanel()  { panel.setAttribute('data-open', '1'); document.body.style.overflow = 'hidden'; setTimeout(function () { input.focus(); }, 60); }
+  function closePanel() { panel.removeAttribute('data-open'); document.body.style.overflow = ''; input.value = ''; results.innerHTML = ''; hint.textContent = IDLE; }
+
+  panel.querySelector('.g-srch-close').addEventListener('click', closePanel);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
+
+  /* 1. the bar above the collection filters */
+  var row = document.querySelector('.g-filter-row');
+  if (row && row.parentNode) {
+    var count = document.querySelectorAll('.g-luxury-card').length;
+    var bar = document.createElement('button');
+    bar.type = 'button';
+    bar.className = 'g-srch-bar';
+    bar.setAttribute('aria-label', 'Search products');
+    bar.innerHTML = ICON + '<span>' + (count ? 'Search ' + count + ' products' : 'Search products') + '</span>';
+    row.parentNode.insertBefore(bar, row);
+    bar.addEventListener('click', openPanel);
+  }
+
+  /* 2. a Search item at the top of the mobile menu */
+  var nav = document.getElementById('gMobileNav');
+  if (nav) {
+    var item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'g-srch-navitem';
+    item.innerHTML = ICON + '<span>Search</span>';
+    nav.insertBefore(item, nav.firstChild);
+    item.addEventListener('click', openPanel);
+  }
+
+  /* Shopify returns price as "35.99" on this endpoint, not cents - handle both */
+  function priceOf(p) {
+    if (p === undefined || p === null) return '';
+    if (typeof p === 'number') return '$' + (p / 100).toFixed(2);
+    var s = String(p).trim();
+    return /^[0-9.]/.test(s) ? '$' + s : s;   /* already formatted? leave it */
+  }
+  function sized(u) { if (!u) return ''; return u.indexOf('?') > -1 ? u + '&width=160' : u + '?width=160'; }
+
+  var timer = null, last = '';
+
+  input.addEventListener('input', function () {
+    var q = input.value.trim();
+    clearTimeout(timer);
+    if (q.length < 2) { results.innerHTML = ''; hint.textContent = IDLE; return; }
+    hint.textContent = 'Searching';
+    timer = setTimeout(function () { run(q); }, 260);
+  });
+
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && input.value.trim()) {
+      window.location.href = '/search?q=' + encodeURIComponent(input.value.trim()) + '&type=product';
+    }
+  });
+
+  function run(q) {
+    last = q;
+    fetch('/search/suggest.json?q=' + encodeURIComponent(q) +
+          '&resources[type]=product&resources[limit]=8&resources[options][unavailable_products]=last')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || q !== last) return;
+        var list = (data.resources && data.resources.results && data.resources.results.products) || [];
+        if (!list.length) { results.innerHTML = ''; hint.textContent = 'No match for "' + q + '"'; return; }
+        hint.textContent = list.length + (list.length === 1 ? ' result' : ' results');
+        results.innerHTML = list.map(function (p) {
+          var img = sized((p.featured_image && p.featured_image.url) || p.image || '');
+          var cat = p.type || '';
+          var pr  = priceOf(p.price);
+          return '<a class="g-srch-item" href="' + p.url + '">' +
+                   (img ? '<img src="' + img + '" alt="" loading="lazy">' : '') +
+                   '<span>' +
+                     (cat ? '<span class="g-srch-cat">' + cat + '</span>' : '') +
+                     '<span class="g-srch-name">' + p.title + '</span>' +
+                     (pr ? '<span class="g-srch-price">' + pr + '</span>' : '') +
+                   '</span>' +
+                 '</a>';
+        }).join('') +
+        '<a class="g-srch-all" href="/search?q=' + encodeURIComponent(q) + '&type=product">See all results</a>';
+      })
+      .catch(function () { hint.textContent = 'Search unavailable'; });
+  }
+})();
+</script>
+{%- comment -%}
+  GORONY - finishing details (31 Aug 2026)
+  No product names or copy are changed anywhere.
+
+  1. Centerpiece button now goes to the serum it advertises, not to the
+     full 76-product list. Text becomes "Shop the Serum".
+  2. Images fade in instead of popping. Kills the blank-box flash on the
+     product page thumbnails and the collection grid.
+  3. Product page thumbnails sit on a deep green tile while loading, so an
+     empty box never shows white.
+  4. Buttons, shade swatches and the search bar give a small press response.
+
+  Safe by design: if the JavaScript fails, images are visible as normal and
+  nothing is hidden. Everything below is additive.
+{%- endcomment -%}
+
+<style>
+  /* images fade in rather than snapping into place */
+  .g-fade-in{opacity:0;transition:opacity .55s ease;}
+  .g-fade-in.g-loaded{opacity:1;}
+
+  /* product page thumbnails: deep green tile, never a white flash */
+  .g-pdp__thumb{background:#0F241C;}
+  .g-pdp__thumb img{transition:opacity .4s ease;}
+
+  /* gentle press feedback - makes taps feel considered */
+  .g-luxury-card > a{transition:border-color .3s ease, transform .3s ease;}
+  .g-luxury-card > a:active{transform:scale(.985);}
+  .g-btn-solid,.g-swatch,.g-srch-bar{transition:transform .12s ease, background .25s ease, border-color .25s ease;}
+  .g-btn-solid:active,.g-swatch:active,.g-srch-bar:active{transform:translateY(1px);}
+
+  /* keeps the carousel and card zoom crisp on mobile */
+  .g-carousel-slide img,.g-luxury-card img{backface-visibility:hidden;}
+</style>
+
+<script>
+(function () {
+  /* 1. point the Centerpiece button at the product it advertises */
+  var links = document.querySelectorAll('a[href="/collections/all"]');
+  for (var i = 0; i < links.length; i++) {
+    var a = links[i];
+    if (/discover the collection/i.test(a.textContent || '')) {
+      a.setAttribute('href', '/products/collagen-and-retinol-serum');
+      a.textContent = 'Shop the Serum';
+      break;
+    }
+  }
+
+  /* 2. fade images in. Only touches images that have not loaded yet, so a
+        failure here can never leave a picture hidden. */
+  function fade(img) {
+    if (img.complete) return;
+    img.classList.add('g-fade-in');
+    function show() { img.classList.add('g-loaded'); }
+    img.addEventListener('load', show, { once: true });
+    img.addEventListener('error', show, { once: true });
+    /* belt and braces - reveal after 3s no matter what */
+    setTimeout(show, 3000);
+  }
+
+  function sweep() {
+    var imgs = document.querySelectorAll('img:not(.g-fade-in)');
+    for (var i = 0; i < imgs.length; i++) fade(imgs[i]);
+  }
+
+  sweep();
+
+  /* catch images added later, e.g. search results and the carousel */
+  if (window.MutationObserver) {
+    var mo = new MutationObserver(function () { sweep(); });
+    mo.observe(document.body, { childList: true, subtree: true });
+  }
+})();
+</script>
+{%- comment -%}
+  GORONY - search panel polish (31 Aug 2026)
+
+  Add-on for the existing search. Nothing to delete.
+
+  Before: opening search gave a huge empty green void with the words
+  "TYPE TO SEARCH" floating in it.
+
+  After: the empty panel shows Popular Searches as tappable chips, plus
+  links to the full collection and the Centerpiece. Result thumbnails sit
+  on an ivory tile with a bronze hairline instead of a bare white square.
+{%- endcomment -%}
+
+<style>
+  .g-srch-inner{padding:20px 22px 28px!important;}
+  .g-srch-head{padding-bottom:14px!important;}
+  .g-srch-hint{margin:16px 0 2px!important;}
+
+  /* result thumbnails: warm tile, not a bare white box */
+  .g-srch-item img{background:#F5F0E6!important;border:1px solid rgba(139,111,62,0.25)!important;border-radius:2px;}
+
+  /* empty state */
+  .g-srch-sugg{padding-top:6px;}
+  .g-srch-sugg-label{font-family:Jost,Arial,sans-serif!important;font-size:9px!important;letter-spacing:.3em!important;
+    text-transform:uppercase;color:#8B6F3E!important;margin:0 0 14px!important;}
+  .g-srch-chips{display:flex;flex-wrap:wrap;gap:9px;}
+  .g-srch-chip{font-family:Jost,Arial,sans-serif!important;font-size:11px!important;letter-spacing:.16em!important;
+    text-transform:uppercase;color:rgba(245,240,230,0.75)!important;background:transparent;
+    border:1px solid rgba(201,162,75,0.4);border-radius:999px;padding:9px 15px!important;cursor:pointer;
+    transition:background .2s,border-color .2s,color .2s;}
+  .g-srch-chip:active{background:#C9A24B;border-color:#C9A24B;color:#0D1F18!important;}
+  .g-srch-foot{margin-top:26px;padding-top:18px;border-top:1px solid rgba(139,111,62,0.25);}
+  .g-srch-foot a{display:block;font-family:Jost,Arial,sans-serif!important;font-size:11px!important;
+    letter-spacing:.2em!important;text-transform:uppercase;color:#C9A24B!important;text-decoration:none;padding:7px 0;}
+</style>
+
+<script>
+(function () {
+  /* every term below was checked against this store - all return products */
+  var TERMS = ['Lipstick','Lip Gloss','Serum','Moisturizer','Mascara','Eyeliner','Brush','Hair Oil'];
+
+  function start() {
+    var panel = document.querySelector('.g-srch-panel');
+    if (!panel) return false;
+    var results = panel.querySelector('.g-srch-results');
+    var input   = panel.querySelector('.g-srch-input');
+    var hint    = panel.querySelector('.g-srch-hint');
+    if (!results || !input) return false;
+
+    var busy = false;
+
+    function showSuggestions() {
+      if (busy) return;
+      busy = true;
+      if (hint) hint.style.display = 'none';
+
+      var html = '<div class="g-srch-sugg"><p class="g-srch-sugg-label">Popular searches</p><div class="g-srch-chips">';
+      for (var i = 0; i < TERMS.length; i++) {
+        html += '<button type="button" class="g-srch-chip">' + TERMS[i] + '</button>';
+      }
+      html += '</div><div class="g-srch-foot">' +
+                '<a href="/collections/all">Browse the full collection</a>' +
+                '<a href="/products/collagen-and-retinol-serum">The Centerpiece &mdash; Collagen &amp; Retinol Serum</a>' +
+              '</div></div>';
+      results.innerHTML = html;
+
+      var chips = results.querySelectorAll('.g-srch-chip');
+      for (var j = 0; j < chips.length; j++) {
+        chips[j].addEventListener('click', function () {
+          input.value = this.textContent;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          input.focus();
+        });
+      }
+      busy = false;
+    }
+
+    function refresh() {
+      var typing = input.value.trim().length >= 2;
+      var hasResults = !!results.querySelector('.g-srch-item');
+      var hasSuggestions = !!results.querySelector('.g-srch-sugg');
+
+      if (typing) {
+        if (hint) hint.style.display = '';
+        return;
+      }
+      if (!hasResults && !hasSuggestions) showSuggestions();
+    }
+
+    /* the panel clears its own results on open and on close - catch that */
+    if (window.MutationObserver) {
+      new MutationObserver(function () { refresh(); })
+        .observe(results, { childList: true });
+      new MutationObserver(function () { setTimeout(refresh, 40); })
+        .observe(panel, { attributes: true, attributeFilter: ['data-open'] });
+    }
+    input.addEventListener('input', refresh);
+    refresh();
+    return true;
+  }
+
+  if (!start()) {
+    var n = 0;
+    var t = setInterval(function () { if (start() || ++n > 20) clearInterval(t); }, 400);
+  }
+})();
+</script>
+{%- comment -%}
+  GORONY - "Men" category pill.  v2
+  End of snippets/g-footer.liquid, theme gorony-theme-fixed (160348602565).
+{%- endcomment -%}
+<script>
+(function () {
+  var SLUG = 'men';
+  var LABEL = 'Men';
+  var TYPE_MATCH = 'men';
+  var PAGE_SIZE = 15;
+
+  function slugify(s) {
+    return String(s || '').toLowerCase().replace(/\s+/g, '');
+  }
+
+  function start() {
+    var row = document.querySelector('.g-filter-pills');
+    var grid = document.querySelector('.g-luxury-grid');
+    if (!row || !grid) return;
+    if (row.querySelector('[data-filter="' + SLUG + '"]')) return;
+
+    fetch('/products.json?limit=250', { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.products) return;
+        var types = {};
+        data.products.forEach(function (p) { types[p.handle] = slugify(p.product_type); });
+        tagCards(types);
+      })
+      .catch(function () {});
+
+    function tagCards(types) {
+      var cards = Array.prototype.slice.call(grid.querySelectorAll('.g-luxury-card'));
+      var found = 0;
+
+      cards.forEach(function (card) {
+        var a = card.querySelector('a[href]');
+        if (!a) return;
+        var m = a.getAttribute('href').match(/\/products\/([^/?#]+)/);
+        if (!m) return;
+        if (types[m[1]] !== TYPE_MATCH) return;
+
+        card.setAttribute('data-category', SLUG);
+        found++;
+
+        var eyebrow = card.querySelector('p.uppercase');
+        if (eyebrow && !eyebrow.textContent.trim()) eyebrow.textContent = LABEL;
+      });
+
+      if (found) build(cards, found);
+    }
+
+    function build(cards, count) {
+      var countEl = document.querySelector('[data-visible-count]');
+      var pag = document.getElementById('gCatPagination');
+      var prevBtn = document.getElementById('gCatPrevBtn');
+      var nextBtn = document.getElementById('gCatNextBtn');
+      var pageInfo = document.getElementById('gCatPageInfo');
+
+      var pill = document.createElement('button');
+      pill.type = 'button';
+      pill.className = 'g-luxury-filter-pill';
+      pill.setAttribute('data-filter', SLUG);
+      pill.setAttribute('aria-pressed', 'false');
+      pill.innerHTML = LABEL + ' <span class="g-pill-count">' + count + '</span>';
+      row.appendChild(pill);
+
+      var active = false;
+      var page = 1;
+
+      function allCards() {
+        return Array.prototype.slice.call(grid.querySelectorAll('.g-luxury-card'));
+      }
+      function mine() {
+        return allCards().filter(function (c) {
+          return c.getAttribute('data-category') === SLUG;
+        });
+      }
+
+      function render() {
+        var men = mine();
+        var total = men.length;
+        var pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+        if (page > pages) page = pages;
+        var from = (page - 1) * PAGE_SIZE;
+        var to = from + PAGE_SIZE;
+
+        allCards().forEach(function (card) {
+          var i = men.indexOf(card);
+          card.classList.toggle('g-card-hidden', !(i >= from && i < to));
+        });
+
+        if (countEl) countEl.textContent = total + (total === 1 ? ' Piece' : ' Pieces');
+
+        Array.prototype.forEach.call(row.querySelectorAll('.g-luxury-filter-pill'), function (p) {
+          var on = p === pill;
+          p.classList.toggle('is-active', on);
+          p.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+
+        if (pag) {
+          if (pages > 1) {
+            pag.hidden = false;
+            if (pageInfo) pageInfo.textContent = 'Page ' + page + ' of ' + pages;
+            if (prevBtn) prevBtn.disabled = page <= 1;
+            if (nextBtn) nextBtn.disabled = page >= pages;
+          } else {
+            pag.hidden = true;
+          }
+        }
+      }
+
+      function scrollUp() {
+        var s = document.getElementById('g-collection-start');
+        if (s) s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      pill.addEventListener('click', function () {
+        active = true;
+        page = 1;
+        render();
+        scrollUp();
+      });
+
+      row.addEventListener('click', function (e) {
+        var other = e.target.closest ? e.target.closest('.g-luxury-filter-pill') : null;
+        if (!other || other === pill) return;
+        active = false;
+        pill.classList.remove('is-active');
+        pill.setAttribute('aria-pressed', 'false');
+      });
+
+      function paginate(step) {
+        return function (e) {
+          if (!active) return;
+          e.stopPropagation();
+          var pages = Math.max(1, Math.ceil(mine().length / PAGE_SIZE));
+          var next = page + step;
+          if (next < 1 || next > pages) return;
+          page = next;
+          render();
+          scrollUp();
+        };
+      }
+      if (prevBtn) prevBtn.addEventListener('click', paginate(-1), true);
+      if (nextBtn) nextBtn.addEventListener('click', paginate(1), true);
+
+      var sortMenu = document.querySelector('[data-sort-menu]');
+      if (sortMenu) {
+        sortMenu.addEventListener('click', function () {
+          if (!active) return;
+          page = 1;
+          setTimeout(render, 0);
+        });
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+})();
+</script>
+{%- comment -%}
+  GORONY - "Men" category pill for the collection page.  v3
+  End of snippets/g-footer.liquid, theme gorony-theme-fixed (160348602565).
+  Safe to paste underneath v2 without deleting anything.
+{%- endcomment -%}
+<script>
+(function () {
+  var SLUG = 'men';
+  var LABEL = 'Men';
+  var TYPE_MATCH = 'men';
+  var PAGE_SIZE = 15;
+  var CACHE_KEY = 'g-cat-' + SLUG;
+
+  function slugify(s) {
+    return String(s || '').toLowerCase().replace(/\s+/g, '');
+  }
+  function readCache() {
+    try {
+      var v = JSON.parse(localStorage.getItem(CACHE_KEY));
+      return (v && v.handles instanceof Array) ? v : null;
+    } catch (e) { return null; }
+  }
+  function writeCache(handles) {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ handles: handles, ts: Date.now() }));
+    } catch (e) {}
+  }
+
+  function start() {
+    var row = document.querySelector('.g-filter-pills');
+    var grid = document.querySelector('.g-luxury-grid');
+    if (!row || !grid) return;
+    if (row.querySelector('[data-filter="' + SLUG + '"]')) return;
+
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.g-luxury-card'));
+    if (!cards.length) return;
+
+    function handleOf(card) {
+      var a = card.querySelector('a[href]');
+      if (!a) return null;
+      var m = a.getAttribute('href').match(/\/products\/([^/?#]+)/);
+      return m ? m[1] : null;
+    }
+
+    function tag(handles) {
+      var set = {}, n = 0;
+      handles.forEach(function (h) { set[h] = 1; });
+      cards.forEach(function (card) {
+        var h = handleOf(card);
+        if (!h || !set[h]) return;
+        card.setAttribute('data-category', SLUG);
+        n++;
+        var eyebrow = card.querySelector('p.uppercase');
+        if (eyebrow && !eyebrow.textContent.trim()) eyebrow.textContent = LABEL;
+      });
+      return n;
+    }
+
+    // paint immediately, from cache when we have one
+    var cached = readCache();
+    var count = cached ? tag(cached.handles) : 0;
+
+    var pill = document.createElement('button');
+    pill.type = 'button';
+    pill.className = 'g-luxury-filter-pill';
+    pill.setAttribute('data-filter', SLUG);
+    pill.setAttribute('aria-pressed', 'false');
+    pill.innerHTML = LABEL + ' <span class="g-pill-count">' + (count || '') + '</span>';
+    row.appendChild(pill);
+    var countSpan = pill.querySelector('.g-pill-count');
+
+    // if an older version of this block is still further up the file, it will
+    // try to append its own pill once its fetch lands - remove the duplicate
+    try {
+      new MutationObserver(function () {
+        Array.prototype.forEach.call(
+          row.querySelectorAll('[data-filter="' + SLUG + '"]'),
+          function (p) { if (p !== pill) p.remove(); }
+        );
+      }).observe(row, { childList: true });
+    } catch (e) {}
+
+    var active = false;
+    var page = 1;
+
+    function mine() {
+      return Array.prototype.slice.call(grid.querySelectorAll('.g-luxury-card'))
+        .filter(function (c) { return c.getAttribute('data-category') === SLUG; });
+    }
+    function allCards() {
+      return Array.prototype.slice.call(grid.querySelectorAll('.g-luxury-card'));
+    }
+
+    var countEl = document.querySelector('[data-visible-count]');
+    var pag = document.getElementById('gCatPagination');
+    var prevBtn = document.getElementById('gCatPrevBtn');
+    var nextBtn = document.getElementById('gCatNextBtn');
+    var pageInfo = document.getElementById('gCatPageInfo');
+
+    function render() {
+      var men = mine();
+      var total = men.length;
+      var pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+      if (page > pages) page = pages;
+      var from = (page - 1) * PAGE_SIZE;
+      var to = from + PAGE_SIZE;
+
+      allCards().forEach(function (card) {
+        var i = men.indexOf(card);
+        card.classList.toggle('g-card-hidden', !(i >= from && i < to));
+      });
+
+      if (countEl) countEl.textContent = total + (total === 1 ? ' Piece' : ' Pieces');
+
+      Array.prototype.forEach.call(row.querySelectorAll('.g-luxury-filter-pill'), function (p) {
+        var on = p === pill;
+        p.classList.toggle('is-active', on);
+        p.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+
+      if (pag) {
+        if (pages > 1) {
+          pag.hidden = false;
+          if (pageInfo) pageInfo.textContent = 'Page ' + page + ' of ' + pages;
+          if (prevBtn) prevBtn.disabled = page <= 1;
+          if (nextBtn) nextBtn.disabled = page >= pages;
+        } else {
+          pag.hidden = true;
+        }
+      }
+    }
+
+    function scrollUp() {
+      var s = document.getElementById('g-collection-start');
+      if (s) s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    pill.addEventListener('click', function () {
+      active = true;
+      page = 1;
+      render();
+      scrollUp();
+    });
+
+    row.addEventListener('click', function (e) {
+      var other = e.target.closest ? e.target.closest('.g-luxury-filter-pill') : null;
+      if (!other || other === pill) return;
+      active = false;
+      pill.classList.remove('is-active');
+      pill.setAttribute('aria-pressed', 'false');
+    });
+
+    function paginate(step) {
+      return function (e) {
+        if (!active) return;
+        e.stopPropagation();
+        var pages = Math.max(1, Math.ceil(mine().length / PAGE_SIZE));
+        var next = page + step;
+        if (next < 1 || next > pages) return;
+        page = next;
+        render();
+        scrollUp();
+      };
+    }
+    if (prevBtn) prevBtn.addEventListener('click', paginate(-1), true);
+    if (nextBtn) nextBtn.addEventListener('click', paginate(1), true);
+
+    var sortMenu = document.querySelector('[data-sort-menu]');
+    if (sortMenu) {
+      sortMenu.addEventListener('click', function () {
+        if (!active) return;
+        page = 1;
+        setTimeout(render, 0);
+      });
+    }
+
+    // then reconcile against the store, quietly
+    fetch('/products.json?limit=250', { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.products) return;
+
+        var handles = data.products
+          .filter(function (p) { return slugify(p.product_type) === TYPE_MATCH; })
+          .map(function (p) { return p.handle; });
+        writeCache(handles);
+
+        var before = mine().length;
+        var now = tag(handles);
+
+        // always publish the true count: another block on the page may have
+        // tagged the same cards already, which would make a diff check lie
+        countSpan.textContent = now || '';
+        if (!now) { pill.remove(); return; }
+        if (now !== before && active) render();
+      })
+      .catch(function () {});
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+})();
+</script>
+{%- comment -%}
+  GORONY - restate the founding offers:
+      Buy 1  20% -> 15%   (code BUY1SAVE20)
+      Buy 2  50% -> 40%   (code BUY2SAVE50)
+  Append to the END of snippets/g-footer.liquid.
+  Change BOTH Shopify discounts first - this only changes what customers read.
+{%- endcomment -%}
+<script>
+(function () {
+  var CODES = [
+    ['BUY1SAVE20', 'BUY1SAVE20'],   // [current, new] - differ only after creating the new one
+    ['BUY2SAVE50', 'BUY2SAVE50']
+  ];
+
+  var PHRASES = [
+    ['Get 50% Off',   'Get 40% Off'],
+    ['get 50% off',   'get 40% off'],
+    ['up to 50% off', 'up to 40% off'],
+    ['Get 20% Off',   'Get 15% Off'],
+    ['get 20% off',   'get 15% off']
+  ];
+
+  function swap(s) {
+    var i;
+    for (i = 0; i < PHRASES.length; i++) s = s.split(PHRASES[i][0]).join(PHRASES[i][1]);
+    for (i = 0; i < CODES.length; i++) {
+      if (CODES[i][0] !== CODES[i][1]) s = s.split(CODES[i][0]).join(CODES[i][1]);
+    }
+    return s;
+  }
+
+  function run() {
+    var walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        var p = n.parentNode;
+        if (!p) return NodeFilter.FILTER_REJECT;
+        var t = p.nodeName;
+        if (t === 'SCRIPT' || t === 'STYLE' || t === 'NOSCRIPT') return NodeFilter.FILTER_REJECT;
+        return n.nodeValue && n.nodeValue.indexOf('%') > -1
+          ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var hits = [], n;
+    while ((n = walk.nextNode())) hits.push(n);
+    hits.forEach(function (node) {
+      var out = swap(node.nodeValue);
+      if (out !== node.nodeValue) node.nodeValue = out;
+    });
+
+    CODES.forEach(function (pair) {
+      if (pair[0] === pair[1]) return;
+      Array.prototype.forEach.call(
+        document.querySelectorAll('[data-copy="' + pair[0] + '"]'),
+        function (el) { el.setAttribute('data-copy', pair[1]); el.textContent = pair[1]; });
+      Array.prototype.forEach.call(
+        document.querySelectorAll('a[href*="' + pair[0] + '"]'),
+        function (el) { el.setAttribute('href', el.getAttribute('href').split(pair[0]).join(pair[1])); });
+    });
+  }
+
+  function start() {
+    run();
+    try {
+      new MutationObserver(function () { run(); })
+        .observe(document.body, { childList: true, subtree: true, characterData: true });
+    } catch (e) {}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+})();
+</script>
+{%- comment -%}
+  GORONY - point the advertised codes at the renamed Shopify discounts.
+      BUY1SAVE20 -> BUY1SAVE15
+      BUY2SAVE50 -> BUY2SAVE40
+  Append to the END of snippets/g-footer.liquid.
+{%- endcomment -%}
+<script>
+(function () {
+  var M = [['BUY1SAVE20', 'BUY1SAVE15'], ['BUY2SAVE50', 'BUY2SAVE40']];
+
+  function fix() {
+    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        var p = n.parentNode, t = p && p.nodeName;
+        if (!p || t === 'SCRIPT' || t === 'STYLE' || t === 'NOSCRIPT') return NodeFilter.FILTER_REJECT;
+        for (var i = 0; i < M.length; i++) {
+          if (n.nodeValue && n.nodeValue.indexOf(M[i][0]) > -1) return NodeFilter.FILTER_ACCEPT;
+        }
+        return NodeFilter.FILTER_REJECT;
+      }
+    });
+    var hits = [], n;
+    while ((n = w.nextNode())) hits.push(n);
+    hits.forEach(function (node) {
+      var v = node.nodeValue;
+      M.forEach(function (m) { v = v.split(m[0]).join(m[1]); });
+      node.nodeValue = v;
+    });
+    M.forEach(function (m) {
+      Array.prototype.forEach.call(document.querySelectorAll('[data-copy="' + m[0] + '"]'),
+        function (e) { e.setAttribute('data-copy', m[1]); e.textContent = m[1]; });
+      Array.prototype.forEach.call(document.querySelectorAll('a[href*="' + m[0] + '"]'),
+        function (e) { e.setAttribute('href', e.getAttribute('href').split(m[0]).join(m[1])); });
+    });
+  }
+
+  function go() {
+    fix();
+    try { new MutationObserver(fix).observe(document.body, { childList: true, subtree: true, characterData: true }); }
+    catch (e) {}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
+})();
+</script>
+{%- comment -%}
+  GORONY - search panel refinement.  CSS only, no JavaScript.
+  Append to the END of snippets/g-footer.liquid on gorony-theme-fixed (160348602565).
+
+  The panel was 720px tall with its content ending at 345px - more than half of it
+  empty. Everything here is layout and finish; the search itself is untouched.
+{%- endcomment -%}
+<style>
+  /* depth, not a flat slab */
+  .g-srch-panel{
+    background:radial-gradient(115% 85% at 50% 32%, rgba(22,48,36,.20) 0%, transparent 60%), #0D1F18 !important;
+  }
+  .g-srch-panel::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(90% 60% at 50% 120%, rgba(201,162,75,.07), transparent 60%);
+  }
+
+  /* centre the block; pin the eyebrow + close to the top */
+  .g-srch-inner{
+    position:relative !important;
+    justify-content:center !important;
+    max-width:660px !important;
+    padding:0 28px !important;
+  }
+  .g-srch-head{
+    position:absolute !important; top:26px !important; left:28px !important; right:28px !important;
+    padding:0 !important;
+  }
+  /* stop the results column from swallowing the empty space */
+  .g-srch-inner > *{ flex:0 0 auto !important; }
+  .g-srch-results{ max-height:44vh !important; overflow:auto !important; }
+
+  /* the mark */
+  .g-srch-field::before{
+    content:"\25C6";
+    position:absolute; top:-34px; left:50%; transform:translateX(-50%);
+    color:#C9A24B; font-size:7px; opacity:.5;
+  }
+
+  /* the field: one hairline rule, centred */
+  .g-srch-field{
+    position:relative !important;
+    border:0 !important; border-bottom:1px solid rgba(201,162,75,.32) !important;
+    background:transparent !important; border-radius:0 !important;
+    padding:0 0 16px !important; margin:0 0 40px !important;
+    justify-content:center !important;
+    transition:border-color .45s ease !important;
+  }
+  .g-srch-field:focus-within{ border-bottom-color:rgba(201,162,75,.85) !important; }
+  .g-srch-field svg, .g-srch-field button{ display:none !important; }
+  .g-srch-input{
+    font-size:30px !important; text-align:center !important; padding:4px 0 !important;
+  }
+  .g-srch-input::placeholder{ color:rgba(245,240,230,.30) !important; font-style:italic !important; }
+
+  /* suggestions */
+  .g-srch-sugg{ text-align:center !important; padding:0 !important; }
+  .g-srch-sugg-label{ display:block !important; margin:0 0 18px !important; opacity:.85 !important; }
+  .g-srch-chips{ justify-content:center !important; gap:9px !important; }
+  .g-srch-chip{
+    border-color:rgba(201,162,75,.26) !important;
+    padding:10px 18px !important; font-size:10px !important; letter-spacing:.20em !important;
+    color:rgba(245,240,230,.72) !important;
+    transition:background .3s ease,color .3s ease,border-color .3s ease !important;
+  }
+  .g-srch-chip:hover{ background:#C9A24B !important; color:#0D1F18 !important; border-color:#C9A24B !important; }
+
+  /* footer: two centred lines, clear hierarchy */
+  .g-srch-foot{
+    margin:34px 0 0 !important; padding:22px 0 0 !important;
+    border-top:1px solid rgba(201,162,75,.16) !important;
+    display:flex !important; flex-direction:column !important;
+    align-items:center !important; gap:10px !important;
+  }
+  .g-srch-foot a{
+    padding:0 !important; font-size:10px !important; letter-spacing:.22em !important;
+    color:rgba(201,162,75,.88) !important; transition:color .3s ease !important;
+  }
+  .g-srch-foot a:hover{ color:#F3DCA0 !important; }
+  .g-srch-foot a:last-child{ color:rgba(245,240,230,.62) !important; font-size:9.5px !important; }
+  .g-srch-foot a:last-child:hover{ color:#C9A24B !important; }
+
+  /* entrance */
+  @keyframes gSrchRise{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none} }
+  .g-srch-panel[data-open] .g-srch-field,
+  .g-srch-panel[data-open] .g-srch-results,
+  .g-srch-panel[data-open] .g-srch-foot{ animation:gSrchRise .6s cubic-bezier(.2,.7,.3,1) both; }
+  .g-srch-panel[data-open] .g-srch-results{ animation-delay:.07s; }
+  .g-srch-panel[data-open] .g-srch-foot{ animation-delay:.13s; }
+
+  /* phones */
+  @media (max-width:640px){
+    .g-srch-input{ font-size:22px !important; }
+    .g-srch-inner{ padding:0 20px !important; }
+    .g-srch-field{ margin-bottom:30px !important; }
+    .g-srch-chip{ padding:9px 14px !important; letter-spacing:.16em !important; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .g-srch-panel[data-open] .g-srch-field,
+    .g-srch-panel[data-open] .g-srch-results,
+    .g-srch-panel[data-open] .g-srch-foot{ animation:none !important; }
+  }
+</style>
+<style>
+  .g-srch-field::before{ content:none !important; }
+</style>
+{%- comment -%}
+  GORONY - fix "The Founding Offer" copy in the #join section of the collection page.
+  Append to the END of snippets/g-footer.liquid.
+{%- endcomment -%}
+<script>
+(function () {
+  var COPY = 'Join the house list for both welcome codes \u2014 15% off any single piece, or 40% off any two. Enter the code at checkout.';
+
+  function fixOffer() {
+    var sec = document.getElementById('join');
+    if (!sec) return;
+    var p = sec.querySelector('p.font-gorony-body') || sec.querySelector('p');
+    if (p && p.textContent.trim() !== COPY) p.textContent = COPY;
+  }
+
+  function go() {
+    fixOffer();
+    try { new MutationObserver(fixOffer).observe(document.body, { childList: true, subtree: true }); }
+    catch (e) {}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
+})();
+</script>
+<style>
+  .g-filter-bar{ position:static !important; }
+</style>
+{% doc %}Shared continuous video playback and refined Gorony footer branding.{% enddoc %}
+<style>
+.ga-motion,.gs-motion,.gq-motion{display:none!important}
+.gf-signature{gap:24px;padding:28px 0 40px;align-items:center}
+.gf-signature>span{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:clamp(56px,11.6vw,190px);letter-spacing:.095em;line-height:1.15;background:linear-gradient(110deg,#aa905b,#ead8ac 48%,#b59b68);background-clip:text;-webkit-background-clip:text;color:transparent;font-kerning:normal}
+.gf-signature .gf-signature-crest{width:clamp(65px,9vw,130px);height:auto;aspect-ratio:1;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 4px 16px #c9a24b15);transition:transform .8s}
+.gf-signature:hover .gf-signature-crest{transform:translateY(-4px)}
+.gf-brand>span{font-family:'Playfair Display',Georgia,serif;font-weight:400;letter-spacing:.23em;font-size:23px}
+@media(max-width:760px){.gf-signature{gap:12px;padding:24px 0 30px}.gf-signature>span{font-size:11vw;letter-spacing:.075em}.gf-signature .gf-signature-crest{width:48px}.gf-brand>span{font-size:21px}}
+</style>
+<script>
+(()=>{function bindVideos(scope){scope.querySelectorAll('video').forEach(video=>{if(video.dataset.goronyLoop)return;video.dataset.goronyLoop='true';video.muted=true;video.defaultMuted=true;video.loop=true;video.autoplay=true;video.playsInline=true;video.controls=false;video.setAttribute('muted','');video.setAttribute('autoplay','');video.setAttribute('loop','');video.setAttribute('playsinline','');video.removeAttribute('controls');function play(){if(!document.hidden&&video.paused)video.play().catch(()=>{});}video.addEventListener('pause',play);video.addEventListener('canplay',play);document.addEventListener('visibilitychange',play);play();});}function start(){bindVideos(document);}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();document.addEventListener('shopify:section:load',event=>bindVideos(event.target));})();
+</script>
+
+{% doc %}Remove decorative arrow glyphs from storefront navigation and calls to action.{% enddoc %}
+<style>
+.gf-arrow,.gf-credit-arrow,.gh-arrow,.gh-flower,.ga-product-arrow{display:none!important}
+.gf-discover{display:inline-block;border-bottom:1px solid #c9b47f80;padding-bottom:12px;transition:color .3s,border-color .3s}.gf-discover:hover{color:#e8d7ac;border-color:#e8d7ac}
+.gh-menu .gh-link{grid-template-columns:26px 1fr!important}
+.gf-top span:empty,.gx-product>div>span:empty{display:none!important}
+.gh-invitation{justify-content:flex-start!important}
+</style>
+<script>
+(()=>{const arrows=/[\u2190-\u2199\u219D\u21A0\u21AA\u21B1\u21D2\u2794\u279C\u27A1\u2B06\u2B07\uFE0E\uFE0F]/g;function clean(scope){if(!scope.querySelectorAll)return;scope.querySelectorAll('a,button,summary').forEach(control=>{if(control.closest('.jdgm-widget'))return;const walker=document.createTreeWalker(control,NodeFilter.SHOW_TEXT);let node,hadArrow=false;while(node=walker.nextNode()){if(node.parentElement.closest('script,style,svg,textarea,[contenteditable="true"]'))continue;const text=node.data.replace(arrows,'');if(text!==node.data){hadArrow=true;node.data=text;}}if(hadArrow&&!control.textContent.trim()&&!control.querySelector('svg,img,input')){const label=control.getAttribute('aria-label');if(label)control.append(document.createTextNode(/search/i.test(label)?'Search':label));}});const search=scope.querySelector('.gh-search button');if(search&&!search.textContent.trim())search.textContent='Search';}function start(){clean(document);const observer=new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===1)clean(node.parentElement||node)})));observer.observe(document.body,{childList:true,subtree:true});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();})();
+</script>
